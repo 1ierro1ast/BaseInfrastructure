@@ -1,6 +1,4 @@
-using Codebase.Infrastructure.Services;
-
-namespace Codebase.Infrastructure.DataStorage
+namespace Codebase.Infrastructure.Services.DataStorage
 {
     public interface ITemporaryLevelVariables : IService
     {

@@ -5,25 +5,25 @@ namespace Codebase.Core.UI.Popups
 {
     public class OverlayPopup : Popup
     {
-        private IGameFlowBroadcaster _gameFlowBroadcaster;
+        private IEventBus _eventBus;
         protected override void OnInitialization()
         {
             base.OnInitialization();
 
-            _gameFlowBroadcaster = AllServices.Container.Single<IGameFlowBroadcaster>();
+            _eventBus = AllServices.Container.Single<IEventBus>();
             
-            _gameFlowBroadcaster.LevelFinishedEvent += GameFlowBroadcaster_OnLevelFinishedEvent;
+            _eventBus.LevelFinishedEvent += EventBusOnLevelFinishedEvent;
         }
 
-        private void GameFlowBroadcaster_OnLevelFinishedEvent()
+        private void EventBusOnLevelFinishedEvent()
         {
-            _gameFlowBroadcaster.LevelFinishedEvent -= GameFlowBroadcaster_OnLevelFinishedEvent;
+            _eventBus.LevelFinishedEvent -= EventBusOnLevelFinishedEvent;
             ClosePopup();
         }
 
         private void OnDestroy()
         {
-            _gameFlowBroadcaster.LevelFinishedEvent -= GameFlowBroadcaster_OnLevelFinishedEvent;
+            _eventBus.LevelFinishedEvent -= EventBusOnLevelFinishedEvent;
         }
     }
 }

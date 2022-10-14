@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Codebase.Core.Ads;
 using Codebase.Core.UI;
-using Codebase.Infrastructure.DataStorage;
-using Codebase.Infrastructure.Factories;
 using Codebase.Infrastructure.GameFlow.States;
 using Codebase.Infrastructure.Services;
+using Codebase.Infrastructure.Services.DataStorage;
+using Codebase.Infrastructure.Services.Factories;
 using Codebase.Infrastructure.StateMachine;
 
 namespace Codebase.Infrastructure.GameFlow
@@ -20,13 +19,13 @@ namespace Codebase.Infrastructure.GameFlow
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services, coroutineRunner),
 
                 [typeof(GameReadyState)] = new GameReadyState(this, services.Single<IUiFactory>(),
-                    services.Single<ITemporaryLevelVariables>(), services.Single<IGameFlowBroadcaster>(),
+                    services.Single<ITemporaryLevelVariables>(), services.Single<IEventBus>(),
                     loadingCurtain, coroutineRunner),
 
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingCurtain,
-                    services.Single<ILevelFactory>(), services.Single<IGameVariables>(), services.Single<IAdsModule>()),
+                    services.Single<ILevelFactory>(), services.Single<IGameVariables>()),
 
-                [typeof(GameplayState)] = new GameplayState(this, services.Single<IGameFlowBroadcaster>(),
+                [typeof(GameplayState)] = new GameplayState(this, services.Single<IEventBus>(),
                     services.Single<IUiFactory>(), services.Single<ITemporaryLevelVariables>(), coroutineRunner,
                     loadingCurtain),
 

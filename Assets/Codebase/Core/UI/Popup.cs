@@ -5,24 +5,25 @@ using UnityEngine.UI;
 
 namespace Codebase.Core.UI
 {
-    public class Popup : MonoBehaviour
+    public abstract class Popup : MonoBehaviour
     {
-        [Header("Open/Close Settings")]
-        [SerializeField] private GameObject _body;
+        [Header("Open/Close Settings")] [SerializeField]
+        private GameObject _body;
+
         [SerializeField] private float _openDelay;
         [SerializeField] private float _closeDelay;
         [SerializeField] private float _closeAnimDuration;
         [SerializeField] private Animator[] _animators;
         [SerializeField] private Button _closePopupButton;
         [SerializeField] private Button _secondClosePopupButton;
-        
-        public static event Action<bool> PopupActionButtonPressed;
+
+        public static event Action<bool> PopupActionButtonPressedEvent;
 
         private const string AnimatorOpenPopupBoolKey = "IsOpen";
         private static readonly int Open = Animator.StringToHash(AnimatorOpenPopupBoolKey);
         private bool _isOpen;
 
-        private Coroutine _openCloseCoroutine; 
+        private Coroutine _openCloseCoroutine;
 
         public bool IsOpen => _isOpen;
 
@@ -35,16 +36,11 @@ namespace Codebase.Core.UI
             OnInitialization();
         }
 
-        protected virtual void OnInitialization()
-        {
-            
-        }
-    
         public void OpenPopup()
         {
             _isOpen = true;
             gameObject.SetActive(true);
-            
+
             if (!gameObject.activeInHierarchy)
                 return;
 
@@ -54,15 +50,10 @@ namespace Codebase.Core.UI
             _openCloseCoroutine = StartCoroutine(OpenCoroutine());
         }
 
-        protected virtual void OnOpenPopup()
-        {
-            //Debug.Log("Open curtain");
-        }
-
         public void ClosePopup()
         {
             _isOpen = false;
-            
+
             if (!gameObject.activeInHierarchy)
                 return;
 
@@ -71,7 +62,24 @@ namespace Codebase.Core.UI
             OnClosePopup();
             _openCloseCoroutine = StartCoroutine(CloseCoroutine());
         }
-    
+
+        #region Callbacks
+
+        protected virtual void OnInitialization()
+        {
+        }
+
+        protected virtual void OnOpenPopup()
+        {
+        }
+
+        protected virtual void OnClosePopup()
+        {
+        }
+
+        #endregion
+
+
         private void OnClosePopupButtonClick()
         {
             ClosePopup();
@@ -80,33 +88,28 @@ namespace Codebase.Core.UI
         private IEnumerator CloseCoroutine()
         {
             yield return new WaitForSeconds(_closeDelay);
-        
+
             foreach (var animator in _animators)
             {
                 if (animator.gameObject.activeInHierarchy)
                     animator.SetBool(Open, false);
             }
-        
+
             yield return new WaitForSeconds(_closeAnimDuration);
             _body.SetActive(false);
         }
-    
+
         private IEnumerator OpenCoroutine()
         {
             yield return new WaitForSeconds(_openDelay);
-        
+
             foreach (var animator in _animators)
-            {if (animator.gameObject.activeInHierarchy)
+            {
+                if (animator.gameObject.activeInHierarchy)
                     animator.SetBool(Open, true);
             }
+
             _body.SetActive(true);
-        }
-
-        protected virtual void OnClosePopup()
-        {
-            //Debug.Log("Close curtain");
-
         }
     }
 }
-

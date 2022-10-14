@@ -1,4 +1,4 @@
-﻿namespace Codebase.Infrastructure.DataStorage
+﻿namespace Codebase.Infrastructure.Services.DataStorage
 {
     public class TemporaryLevelVariables : ITemporaryLevelVariables
     {

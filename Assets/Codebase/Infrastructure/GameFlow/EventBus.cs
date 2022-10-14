@@ -1,9 +1,8 @@
 using System;
-using UnityEngine;
 
 namespace Codebase.Infrastructure.GameFlow
 {
-    public class GameFlowBroadcaster : IGameFlowBroadcaster
+    public class EventBus : IEventBus
     {
         public event Action LevelLoadedEvent;
         public event Action GamePlayStartEvent;

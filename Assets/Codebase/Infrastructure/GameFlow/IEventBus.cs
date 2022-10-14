@@ -3,7 +3,7 @@ using Codebase.Infrastructure.Services;
 
 namespace Codebase.Infrastructure.GameFlow
 {
-    public interface IGameFlowBroadcaster : IService
+    public interface IEventBus : IService
     {
         event Action LevelLoadedEvent;
         event Action GamePlayStartEvent;

@@ -1,7 +1,5 @@
 using System;
 using Codebase.Core.Ads;
-using Codebase.Infrastructure.DataStorage;
-using Codebase.Infrastructure.Factories;
 using Codebase.Infrastructure.Services;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,22 +10,15 @@ namespace Codebase.Core.UI.Popups
     {
         [SerializeField] private Button _retryButton;
         [SerializeField] private GameObject _coinsCounter;
-
-        private IUiFactory _uiFactory;
-        private IGameVariables _gameVariables;
+        
         private IAdsModule _adsModule;
-        public event Action RetryLevel;
+        public event Action RetryLevelEvent;
 
         protected override void OnInitialization()
         {
             base.OnInitialization();
             _retryButton.onClick.AddListener(OnRetryButton);
-
-            _uiFactory = AllServices.Container.Single<IUiFactory>();
-            _gameVariables = AllServices.Container.Single<IGameVariables>();
             _adsModule = AllServices.Container.Single<IAdsModule>();
-            
-            //OpenPopup();
         }
 
         protected override void OnOpenPopup()
@@ -41,7 +32,7 @@ namespace Codebase.Core.UI.Popups
         {
             _retryButton.interactable = false;
             _coinsCounter.gameObject.SetActive(true);
-            _adsModule.ShowInterstitial(RetryCallback, AdPlacements.InterstitialGoRageAfterRestartClick);
+            _adsModule.ShowInterstitial(RetryCallback, AdPlacements.InterstitialRestartClick);
         }
 
         private void RetryCallback(string arg1, string arg2, int arg3)
@@ -51,8 +42,7 @@ namespace Codebase.Core.UI.Popups
 
         public void BroadcastRetryLevel()
         {
-            RetryLevel?.Invoke();
-            //ClosePopup();
+            RetryLevelEvent?.Invoke();
         }
     }
 }

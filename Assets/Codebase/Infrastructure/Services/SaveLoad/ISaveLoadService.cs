@@ -1,7 +1,4 @@
-﻿
-using Codebase.Infrastructure.Services;
-
-namespace Codebase.Infrastructure.SaveLoad
+﻿namespace Codebase.Infrastructure.Services.SaveLoad
 {
     public interface ISaveLoadService : IService
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Codebase.Infrastructure.SaveLoad
+namespace Codebase.Infrastructure.Services.SaveLoad
 {
     public class SaveLoadService : ISaveLoadService
     {
@@ -17,19 +17,17 @@ namespace Codebase.Infrastructure.SaveLoad
                 value = PlayerPrefs.GetInt(saveKey);
                 return true;
             }
-            else
-            {
-                value = 0;
-                return false;
-            }
+
+            value = 0;
+            return false;
         }
-        
+
         public int LoadInt(string saveKey, int defaultValue)
         {
             return PlayerPrefs.GetInt(saveKey, defaultValue);
         }
-        
-        
+
+
         public void SaveFloat(string saveKey, float value)
         {
             PlayerPrefs.SetFloat(saveKey, value);
@@ -43,19 +41,17 @@ namespace Codebase.Infrastructure.SaveLoad
                 value = PlayerPrefs.GetFloat(saveKey);
                 return true;
             }
-            else
-            {
-                value = 0f;
-                return false;
-            }
+
+            value = 0f;
+            return false;
         }
-           
+
         public float LoadFloat(string saveKey, float defaultValue)
         {
             return PlayerPrefs.GetFloat(saveKey, defaultValue);
         }
-        
-        
+
+
         public void SaveString(string saveKey, string value)
         {
             PlayerPrefs.SetString(saveKey, value);
@@ -69,23 +65,21 @@ namespace Codebase.Infrastructure.SaveLoad
                 value = PlayerPrefs.GetString(saveKey);
                 return true;
             }
-            else
-            {
-                value = "";
-                return false;
-            }
+
+            value = "";
+            return false;
         }
-        
+
         public string LoadString(string saveKey, string defaultValue)
         {
             return PlayerPrefs.GetString(saveKey, defaultValue);
         }
-        
-        
+
+
         public void SaveBool(string saveKey, bool value)
         {
             var temp = value ? 1 : 0;
-            
+
             PlayerPrefs.SetInt(saveKey, temp);
             PlayerPrefs.Save();
         }
@@ -97,20 +91,19 @@ namespace Codebase.Infrastructure.SaveLoad
                 value = false;
                 return false;
             }
-            
+
             var temp = PlayerPrefs.GetInt(saveKey);
             value = (temp == 1);
             return true;
-
         }
-        
+
         public bool LoadBool(string saveKey, bool defaultValue)
         {
             var defaultTemp = defaultValue ? 1 : 0;
             var temp = PlayerPrefs.GetInt(saveKey, defaultTemp);
             return (temp == 1);
         }
-        
+
         public void CleanAllData()
         {
             PlayerPrefs.DeleteAll();

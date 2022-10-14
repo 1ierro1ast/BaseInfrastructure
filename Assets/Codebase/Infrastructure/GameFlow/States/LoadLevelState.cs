@@ -1,7 +1,7 @@
 ﻿using Codebase.Core.Ads;
 using Codebase.Core.UI;
-using Codebase.Infrastructure.DataStorage;
-using Codebase.Infrastructure.Factories;
+using Codebase.Infrastructure.Services.DataStorage;
+using Codebase.Infrastructure.Services.Factories;
 using Codebase.Infrastructure.StateMachine;
 
 namespace Codebase.Infrastructure.GameFlow.States
@@ -13,10 +13,9 @@ namespace Codebase.Infrastructure.GameFlow.States
         private readonly LoadingCurtain _loadingCurtain;
         private readonly ILevelFactory _levelFactory;
         private readonly IGameVariables _gameVariables;
-        private readonly IAdsModule _adsModule;
 
         public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, LoadingCurtain loadingCurtain,
-            ILevelFactory levelFactory, IGameVariables gameVariables, IAdsModule adsModule)
+            ILevelFactory levelFactory, IGameVariables gameVariables)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;

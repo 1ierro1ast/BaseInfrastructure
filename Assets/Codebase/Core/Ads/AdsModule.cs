@@ -6,9 +6,9 @@ namespace Codebase.Core.Ads
     public class AdsModule : IAdsModule
     {
         public bool AdsIsEnable { get; private set; }
-        public bool RewardedAdsIsReady => true;//FunGamesMax.IsRewardedAdReady();
+        public bool RewardedAdsIsReady => true;
 
-        public bool InterstitialAdsIsReady => true;//FunGamesMax.IsInterstitialReady;
+        public bool InterstitialAdsIsReady => true;
         public bool NetworkIsEnable => Application.internetReachability == NetworkReachability.NotReachable;
 
 
@@ -26,9 +26,9 @@ namespace Codebase.Core.Ads
         public void LoadBanner()
         {
             if (AdsIsEnable)
-                Debug.Log("Show banner");//FunGamesMax.ShowBannerAd();
+                Debug.Log("Show banner");
             else
-                Debug.Log("Hide banner");//FunGamesMax.HideBannerAd();
+                Debug.Log("Hide banner");
         }
 
         public void ShowReward(Action<string, string, int> callback, string adPlacement, int amount)
@@ -37,7 +37,6 @@ namespace Codebase.Core.Ads
             {
                 Debug.Log("Show Reward");
                 callback("success", "", amount);
-                //FunGamesMax.ShowRewarded(callback, adPlacement, adPlacement, amount);
             }
             else
             {
@@ -51,7 +50,6 @@ namespace Codebase.Core.Ads
             {
                 Debug.Log("Show Interstitial");
                 callback("success", "", 0);
-                //FunGamesMax.ShowInterstitial(callback, adPlacement, adPlacement);
             }
             else
             {

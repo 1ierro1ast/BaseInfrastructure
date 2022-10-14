@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using Codebase.Core.Ads;
 using Codebase.Core.UI.Counters;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,7 +9,6 @@ namespace Codebase.Infrastructure
     public class SceneLoader
     {
         private readonly ICoroutineRunner _coroutineRunner;
-        private readonly IAdsModule _adsModule;
 
         public SceneLoader(ICoroutineRunner coroutineRunner)
         {

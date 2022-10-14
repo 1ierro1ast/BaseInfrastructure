@@ -1,7 +1,7 @@
 ﻿using System;
-using Codebase.Infrastructure.SaveLoad;
+using Codebase.Infrastructure.Services.SaveLoad;
 
-namespace Codebase.Infrastructure.DataStorage
+namespace Codebase.Infrastructure.Services.DataStorage
 {
     public class GameVariables : IGameVariables
     {
@@ -9,22 +9,15 @@ namespace Codebase.Infrastructure.DataStorage
 
         public event Action<int> ChangeLevelNumberEvent;
         public event Action<int> ChangeCoinsCountEvent;
-        public event Action<int> ChangeSkinIdEvent;
 
         private const string LevelNumberSaveKey = "LevelNumber";
-        private const string SkinIdSaveKey = "SkinId";
-        private const string SkinProgressSaveKey = "SkinProgress";
         private const string CoinsCountSaveKey = "CoinsCount";
 
         private const int DefaultLevelNumber = 1;
-        private const int DefaultSkinId = 0;
-        private const int DefaultSkinProgress = 0;
         private const int DefaultCoinsCount = 0;
 
         private int _levelNumber;
         private int _coinsCount;
-        private int _skinId;
-        private int _skinProgress;
 
         public int LevelNumber
         {
@@ -57,76 +50,17 @@ namespace Codebase.Infrastructure.DataStorage
             }
         }
 
-        public int SkinId
-        {
-            get => _skinId;
-            private set
-            {
-                if (value < 0) throw new ArgumentOutOfRangeException(nameof(value));
-                if (_skinId == value)
-                    return;
-                
-                _skinId = value;
-                SaveSkinId();
-                
-                ChangeSkinIdEvent?.Invoke(_skinId);
-            }
-        }
-
-        public int SkinProgress
-        {
-            get => _skinProgress;
-            private set
-            {
-                if (value < 0) throw new ArgumentOutOfRangeException(nameof(value));
-                if (_skinProgress == value)
-                    return;
-                
-                _skinProgress = value;
-                SaveSkinId();
-            }
-        }
-
-        public void SaveSkinProgress()
-        {
-            _saveLoadService.SaveInt(SkinProgressSaveKey, _skinId);
-        }
-
-        public void LoadSkinId()
-        {
-            _skinId = _saveLoadService.LoadInt(SkinIdSaveKey, DefaultSkinId);
-        }
-
-        public void SaveSkinId()
-        {
-            _saveLoadService.SaveInt(SkinIdSaveKey, _skinId);
-        }
-
         public GameVariables(ISaveLoadService saveLoadService)
         {
             _saveLoadService = saveLoadService;
 
             LoadLevelNumber();
             LoadCoinsCount();
-            LoadSkinId();
-            LoadSkinProgress();
-        }
-
-        public void IterateSkinId(int border)
-        {
-            var tempSkinId = _skinId+1;
-            if (tempSkinId >= border) tempSkinId = 0;
-            SkinId = tempSkinId;
         }
 
         public void IterateLevelNumber()
         {
             LevelNumber++;
-        }
-
-        public void AddSkinProgress(int value)
-        {
-            SkinProgress += value;
         }
 
         public void AddCoins(int value)
@@ -153,11 +87,6 @@ namespace Codebase.Infrastructure.DataStorage
             _saveLoadService.SaveInt(LevelNumberSaveKey, _levelNumber);
         }
 
-        public void LoadSkinProgress()
-        {
-            _skinProgress = _saveLoadService.LoadInt(SkinProgressSaveKey, DefaultSkinProgress);
-        }
-
         public void LoadCoinsCount()
         {
             _coinsCount = _saveLoadService.LoadInt(CoinsCountSaveKey, DefaultCoinsCount);
@@ -170,7 +99,8 @@ namespace Codebase.Infrastructure.DataStorage
 
         public void ClearProgress()
         {
-            SkinProgress = 0;
+            LevelNumber = 0;
+            CoinsCount = 0;
         }
     }
 }

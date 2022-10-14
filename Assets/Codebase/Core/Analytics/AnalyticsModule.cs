@@ -1,5 +1,5 @@
 ﻿using System;
-using Codebase.Infrastructure.DataStorage;
+using Codebase.Infrastructure.Services.DataStorage;
 
 //using FunGames.Sdk.Analytics;
 

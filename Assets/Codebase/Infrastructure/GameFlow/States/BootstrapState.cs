@@ -1,10 +1,10 @@
 ﻿using Codebase.Core.Ads;
 using Codebase.Core.Analytics;
-using Codebase.Infrastructure.AssetManagement;
-using Codebase.Infrastructure.DataStorage;
-using Codebase.Infrastructure.Factories;
-using Codebase.Infrastructure.SaveLoad;
 using Codebase.Infrastructure.Services;
+using Codebase.Infrastructure.Services.AssetManagement;
+using Codebase.Infrastructure.Services.DataStorage;
+using Codebase.Infrastructure.Services.Factories;
+using Codebase.Infrastructure.Services.SaveLoad;
 using Codebase.Infrastructure.StateMachine;
 
 namespace Codebase.Infrastructure.GameFlow.States
@@ -12,6 +12,7 @@ namespace Codebase.Infrastructure.GameFlow.States
     public class BootstrapState : IState
     {
         private const string BootSceneName = "BootScene";
+        private const string NextSceneName = "MainScene";
 
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
@@ -40,7 +41,7 @@ namespace Codebase.Infrastructure.GameFlow.States
 
         private void EnterLoadLevel()
         {
-            _stateMachine.Enter<LoadLevelState, string>("MainScene");
+            _stateMachine.Enter<LoadLevelState, string>(NextSceneName);
         }
 
         private void RegisterServices()
@@ -101,8 +102,8 @@ namespace Codebase.Infrastructure.GameFlow.States
 
         private void RegisterGameFlow()
         {
-            _services.RegisterSingle<IGameFlowBroadcaster>(
-                new GameFlowBroadcaster());
+            _services.RegisterSingle<IEventBus>(
+                new EventBus());
         }
 
         private void RegisterPopupFactory()

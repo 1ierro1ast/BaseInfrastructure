@@ -9,12 +9,12 @@ namespace Codebase.Core.DemoGameplay
     {
         [SerializeField] private TriggerType _triggerType;
         private Button _button;
-        private IGameFlowBroadcaster _gameFlowBroadcaster;
+        private IEventBus _eventBus;
 
         private void Awake()
         {
             _button = GetComponent<Button>();
-            _gameFlowBroadcaster = AllServices.Container.Single<IGameFlowBroadcaster>();
+            _eventBus = AllServices.Container.Single<IEventBus>();
             _button?.onClick.AddListener(OnButtonClick);
         }
 
@@ -23,10 +23,10 @@ namespace Codebase.Core.DemoGameplay
             switch (_triggerType)
             {
                 case TriggerType.Win:
-                    _gameFlowBroadcaster.BroadcastPlayerWin();
+                    _eventBus.BroadcastPlayerWin();
                     break;
                 case TriggerType.Lose:
-                    _gameFlowBroadcaster.BroadcastPlayerLose();
+                    _eventBus.BroadcastPlayerLose();
                     break;
             }
 

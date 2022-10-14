@@ -10,35 +10,30 @@ namespace Codebase.Core.UI.Popups
     {
         public event Action StartButtonClickEvent;
         [SerializeField] private Button _startButton;
-        private IGameFlowBroadcaster _gameFlowBroadcaster;
+        private IEventBus _eventBus;
 
         protected override void OnInitialization()
         {
             base.OnInitialization();
             OpenPopup();
             _startButton.onClick.AddListener(OnStartButtonClick);
-            _gameFlowBroadcaster = AllServices.Container.Single<IGameFlowBroadcaster>();
+            _eventBus = AllServices.Container.Single<IEventBus>();
             
-            _gameFlowBroadcaster.GamePlayStartEvent += GameFlow_BroadcasterOnGamePlayStart;
+            _eventBus.GamePlayStartEvent += EventBus_OnGamePlayStart;
         }
 
         private void OnDestroy()
         {
-            _gameFlowBroadcaster.GamePlayStartEvent -= GameFlow_BroadcasterOnGamePlayStart;
+            _eventBus.GamePlayStartEvent -= EventBus_OnGamePlayStart;
         }
 
-        private void GameFlow_BroadcasterOnGamePlayStart()
+        private void EventBus_OnGamePlayStart()
         {
             Debug.Log("Game play start");
             ClosePopup();
         }
 
         private void OnStartButtonClick()
-        {
-            StartButtonClickEvent?.Invoke();
-        }
-
-        public void BroadcastStartLevel()
         {
             StartButtonClickEvent?.Invoke();
         }

@@ -1,5 +1,5 @@
-using Codebase.Infrastructure.DataStorage;
 using Codebase.Infrastructure.Services;
+using Codebase.Infrastructure.Services.DataStorage;
 using Codebase.Utils;
 using TMPro;
 using UnityEngine;
@@ -9,7 +9,7 @@ namespace Codebase.Core.UI.Counters
     public class CoinsCounter : MonoBehaviour
     {
         [SerializeField] private TMP_Text _text;
-        //[SerializeField] private Text _text;
+
         private IGameVariables _gameVariables;
 
         private void Awake()

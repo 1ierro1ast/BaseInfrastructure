@@ -1,7 +1,7 @@
 ﻿using Codebase.Core.UI;
 using Codebase.Core.UI.Popups;
-using Codebase.Infrastructure.DataStorage;
-using Codebase.Infrastructure.Factories;
+using Codebase.Infrastructure.Services.DataStorage;
+using Codebase.Infrastructure.Services.Factories;
 using Codebase.Infrastructure.StateMachine;
 
 namespace Codebase.Infrastructure.GameFlow.States
@@ -25,8 +25,8 @@ namespace Codebase.Infrastructure.GameFlow.States
 
         public void Exit()
         {
-            _popup.NextLevel -= Popup_OnNextLevel;
-            _popup.ButtonClicked -= Popup_OnButtonClicked;
+            _popup.NextLevelEvent -= PopupOnNextLevelEvent;
+            _popup.ButtonClickedEvent -= PopupOnButtonClickedEvent;
             _popup.ClosePopup();
         }
 
@@ -34,16 +34,16 @@ namespace Codebase.Infrastructure.GameFlow.States
         {
             _popup = _uiFactory.CreateWinPopup();
             _popup.OpenPopup();
-            _popup.NextLevel += Popup_OnNextLevel;
-            _popup.ButtonClicked += Popup_OnButtonClicked;
+            _popup.NextLevelEvent += PopupOnNextLevelEvent;
+            _popup.ButtonClickedEvent += PopupOnButtonClickedEvent;
         }
 
-        private void Popup_OnButtonClicked()
+        private void PopupOnButtonClickedEvent()
         {
             _loadingCurtain.OpenPopup();
         }
 
-        private void Popup_OnNextLevel()
+        private void PopupOnNextLevelEvent()
         {
             _gameVariables.IterateLevelNumber();
             _gameStateMachine.Enter<LoadLevelState, string>("MainScene");

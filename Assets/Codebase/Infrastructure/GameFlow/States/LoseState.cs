@@ -1,7 +1,7 @@
 ﻿using Codebase.Core.UI;
 using Codebase.Core.UI.Popups;
-using Codebase.Infrastructure.DataStorage;
-using Codebase.Infrastructure.Factories;
+using Codebase.Infrastructure.Services.DataStorage;
+using Codebase.Infrastructure.Services.Factories;
 using Codebase.Infrastructure.StateMachine;
 
 namespace Codebase.Infrastructure.GameFlow.States
@@ -23,18 +23,18 @@ namespace Codebase.Infrastructure.GameFlow.States
 
         public void Exit()
         {
-            _popup.RetryLevel -= PopupOnRetryLevel;
+            _popup.RetryLevelEvent -= PopupOnRetryLevelEvent;
             _popup.ClosePopup();
         }
 
         public void Enter()
         {
             _popup = _uiFactory.CreateLoosePopup();
-            _popup.RetryLevel += PopupOnRetryLevel;
+            _popup.RetryLevelEvent += PopupOnRetryLevelEvent;
             _popup.OpenPopup();
         }
 
-        private void PopupOnRetryLevel()
+        private void PopupOnRetryLevelEvent()
         {
             _loadingCurtain.OpenPopup();
             _gameStateMachine.Enter<LoadLevelState, string>("MainScene");

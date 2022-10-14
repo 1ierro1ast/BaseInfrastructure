@@ -1,8 +1,8 @@
 ﻿using Codebase.Core.UI.Popups;
-using Codebase.Infrastructure.AssetManagement;
+using Codebase.Infrastructure.Services.AssetManagement;
 using UnityEngine;
 
-namespace Codebase.Infrastructure.Factories
+namespace Codebase.Infrastructure.Services.Factories
 {
     public class UiFactory : IUiFactory
     {
@@ -28,7 +28,6 @@ namespace Codebase.Infrastructure.Factories
         }
         public StartPopup CreateStartPopup()
         {
-            //Debug.Log("start popup");
             if (_startPopup == null)
             {
                 _startPopup = _assetProvider.Instantiate<StartPopup>(AssetPath.StartPopupPath);

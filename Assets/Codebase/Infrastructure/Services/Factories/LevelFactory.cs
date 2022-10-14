@@ -1,11 +1,11 @@
 ﻿using System;
 using Codebase.Core.Level;
-using Codebase.Infrastructure.AssetManagement;
-using Codebase.Infrastructure.DataStorage;
+using Codebase.Infrastructure.Services.AssetManagement;
+using Codebase.Infrastructure.Services.DataStorage;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Codebase.Infrastructure.Factories
+namespace Codebase.Infrastructure.Services.Factories
 {
     public class LevelFactory : ILevelFactory
     {

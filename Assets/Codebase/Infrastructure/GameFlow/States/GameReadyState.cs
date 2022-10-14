@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using Codebase.Core.UI;
 using Codebase.Core.UI.Popups;
-using Codebase.Infrastructure.DataStorage;
-using Codebase.Infrastructure.Factories;
+using Codebase.Infrastructure.Services.DataStorage;
+using Codebase.Infrastructure.Services.Factories;
 using Codebase.Infrastructure.StateMachine;
 using UnityEngine;
 
@@ -13,19 +13,19 @@ namespace Codebase.Infrastructure.GameFlow.States
         private readonly IUiFactory _uiFactory;
         private readonly GameStateMachine _gameStateMachine;
         private readonly ITemporaryLevelVariables _temporaryLevelVariables;
-        private readonly IGameFlowBroadcaster _gameFlowBroadcaster;
+        private readonly IEventBus _eventBus;
         private readonly LoadingCurtain _loadingCurtain;
         private readonly ICoroutineRunner _coroutineRunner;
         private StartPopup _startPopup;
 
         public GameReadyState(GameStateMachine gameStateMachine, IUiFactory uiFactory,
-            ITemporaryLevelVariables temporaryLevelVariables, IGameFlowBroadcaster gameFlowBroadcaster,
+            ITemporaryLevelVariables temporaryLevelVariables, IEventBus eventBus,
             LoadingCurtain loadingCurtain, ICoroutineRunner coroutineRunner)
         {
             _uiFactory = uiFactory;
             _gameStateMachine = gameStateMachine;
             _temporaryLevelVariables = temporaryLevelVariables;
-            _gameFlowBroadcaster = gameFlowBroadcaster;
+            _eventBus = eventBus;
             _loadingCurtain = loadingCurtain;
             _coroutineRunner = coroutineRunner;
         }
@@ -38,10 +38,12 @@ namespace Codebase.Infrastructure.GameFlow.States
         public void Enter()
         {
             _temporaryLevelVariables.ClearData();
+            
             _startPopup = _uiFactory.CreateStartPopup();
             _startPopup.OpenPopup();
             _startPopup.StartButtonClickEvent += StartPopup_OnStartButtonClickEvent;
-            _gameFlowBroadcaster.BroadcastLevelLoaded();
+            
+            _eventBus.BroadcastLevelLoaded();
             _coroutineRunner.StartCoroutine(CloseCurtainCoroutine());
         }
 

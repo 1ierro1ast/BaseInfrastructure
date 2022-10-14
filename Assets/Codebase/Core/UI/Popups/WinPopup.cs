@@ -12,19 +12,14 @@ namespace Codebase.Core.UI.Popups
         [SerializeField] private GameObject _coinsCounter;
         
         private IAdsModule _adsModule;
-        public event Action NextLevel;
-        public event Action ButtonClicked;
+        public event Action NextLevelEvent;
+        public event Action ButtonClickedEvent;
 
         protected override void OnInitialization()
         {
             base.OnInitialization();
             _claimCoinsNoMultiplier.onClick.AddListener(OnClaimCoinsNoMultiplier);
             _adsModule = AllServices.Container.Single<IAdsModule>();
-        }
-
-        private void OpenPopupCallback(string arg1, string arg2, int arg3)
-        {
-            Debug.Log("Interstitial is done");
         }
 
         private void OnEnable()
@@ -40,11 +35,16 @@ namespace Codebase.Core.UI.Popups
             _adsModule.ShowInterstitial(OpenPopupCallback, AdPlacements.InterstitialNextLevel);
         }
 
+        private void OpenPopupCallback(string arg1, string arg2, int arg3)
+        {
+            Debug.Log("Interstitial is done");
+        }
+
         private void ValidateAds()
         {
             if (!_adsModule.RewardedAdsIsReady)
             {
-                //_claimMultipliedCoinsWithAds.interactable = false;
+                // Enable reward buttons here
             }
         }
 
@@ -52,19 +52,13 @@ namespace Codebase.Core.UI.Popups
         {
             _claimCoinsNoMultiplier.interactable = false;
             _coinsCounter.gameObject.SetActive(false);
-            ButtonClicked?.Invoke();
-            //_coinsFxFactory.CreateCoinsFromCanvas(_claimCoinsNoMultiplier.transform.position, 30, 0.05f);
+            ButtonClickedEvent?.Invoke();
             Invoke(nameof(TryGoToNextLevel), 2f);
         }
 
         private void TryGoToNextLevel()
         {
-            BroadcastNextLevel();
-        }
-
-        public void BroadcastNextLevel()
-        {
-            NextLevel?.Invoke();
+            NextLevelEvent?.Invoke();
         }
     }
 }

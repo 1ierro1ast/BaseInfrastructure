@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using Codebase.Core.UI;
 using Codebase.Core.UI.Popups;
-using Codebase.Infrastructure.DataStorage;
-using Codebase.Infrastructure.Factories;
+using Codebase.Infrastructure.Services.DataStorage;
+using Codebase.Infrastructure.Services.Factories;
 using Codebase.Infrastructure.StateMachine;
 using UnityEngine;
 
@@ -11,7 +11,7 @@ namespace Codebase.Infrastructure.GameFlow.States
     public class GameplayState : IState
     {
         private readonly GameStateMachine _gameStateMachine;
-        private readonly IGameFlowBroadcaster _gameFlowBroadcaster;
+        private readonly IEventBus _eventBus;
         private readonly IUiFactory _uiFactory;
         private readonly ITemporaryLevelVariables _temporaryLevelVariables;
         private readonly ICoroutineRunner _coroutineRunner;
@@ -20,12 +20,12 @@ namespace Codebase.Infrastructure.GameFlow.States
         private OverlayPopup _overlayPopup;
 
 
-        public GameplayState(GameStateMachine gameStateMachine, IGameFlowBroadcaster gameFlowBroadcaster,
+        public GameplayState(GameStateMachine gameStateMachine, IEventBus eventBus,
             IUiFactory uiFactory, ITemporaryLevelVariables temporaryLevelVariables,
             ICoroutineRunner coroutineRunner, LoadingCurtain loadingCurtain)
         {
             _gameStateMachine = gameStateMachine;
-            _gameFlowBroadcaster = gameFlowBroadcaster;
+            _eventBus = eventBus;
             _uiFactory = uiFactory;
             _temporaryLevelVariables = temporaryLevelVariables;
             _coroutineRunner = coroutineRunner;
@@ -34,8 +34,8 @@ namespace Codebase.Infrastructure.GameFlow.States
 
         public void Exit()
         {
-            _gameFlowBroadcaster.PlayerWinEvent -= GameFlowBroadcaster_OnPlayerWinEvent;
-            _gameFlowBroadcaster.PlayerLoseEvent -= GameFlowBroadcaster_OnPlayerLoseEvent;
+            _eventBus.PlayerWinEvent -= EventBus_OnPlayerWinEvent;
+            _eventBus.PlayerLoseEvent -= EventBus_OnPlayerLoseEvent;
         }
 
         public void Enter()
@@ -45,21 +45,21 @@ namespace Codebase.Infrastructure.GameFlow.States
             _overlayPopup = _uiFactory.CreateOverlayPopup();
             _overlayPopup.OpenPopup();
 
-            _gameFlowBroadcaster.BroadcastGamePlayStart();
+            _eventBus.BroadcastGamePlayStart();
 
-            _gameFlowBroadcaster.PlayerWinEvent += GameFlowBroadcaster_OnPlayerWinEvent;
-            _gameFlowBroadcaster.PlayerLoseEvent += GameFlowBroadcaster_OnPlayerLoseEvent;
+            _eventBus.PlayerWinEvent += EventBus_OnPlayerWinEvent;
+            _eventBus.PlayerLoseEvent += EventBus_OnPlayerLoseEvent;
         }
 
-        private void GameFlowBroadcaster_OnPlayerLoseEvent()
+        private void EventBus_OnPlayerLoseEvent()
         {
-            _gameFlowBroadcaster.BroadcastLevelFinished();
+            _eventBus.BroadcastLevelFinished();
             _coroutineRunner.StartCoroutine(LoseCoroutine());
         }
 
-        private void GameFlowBroadcaster_OnPlayerWinEvent()
+        private void EventBus_OnPlayerWinEvent()
         {
-            _gameFlowBroadcaster.BroadcastLevelFinished();
+            _eventBus.BroadcastLevelFinished();
             _coroutineRunner.StartCoroutine(WinCoroutine());
         }
 
