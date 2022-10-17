@@ -7,7 +7,6 @@ namespace Codebase.Core.Ads
     {
         public bool AdsIsEnable { get; private set; }
         public bool RewardedAdsIsReady => true;
-
         public bool InterstitialAdsIsReady => true;
         public bool NetworkIsEnable => Application.internetReachability == NetworkReachability.NotReachable;
 
@@ -56,6 +55,5 @@ namespace Codebase.Core.Ads
                 callback("success", "", 0);
             }
         }
-        
     }
 }

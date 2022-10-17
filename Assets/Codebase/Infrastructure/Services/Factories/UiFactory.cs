@@ -1,4 +1,5 @@
-﻿using Codebase.Core.UI.Popups;
+﻿using Codebase.Core.UI;
+using Codebase.Core.UI.Popups;
 using Codebase.Infrastructure.Services.AssetManagement;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ namespace Codebase.Infrastructure.Services.Factories
         private OverlayPopup _overlayPopup;
         private WinPopup _winPopup;
         private LosePopup _losePopup;
+        private Canvas _mainCanvas;
 
         public UiFactory(IAssetProvider assetProvider)
         {
@@ -21,49 +23,64 @@ namespace Codebase.Infrastructure.Services.Factories
 
         private void InitializePopups()
         {
-            CreateStartPopup();
-            CreateOverlayPopup();
-            CreateWinPopup();
-            CreateLoosePopup();
+            CreateMainCanvas();
+            GetStartPopup();
+            GetOverlayPopup();
+            GetWinPopup();
+            GetLosePopup();
         }
-        public StartPopup CreateStartPopup()
+
+        private void CreateMainCanvas()
+        {
+            if (_mainCanvas == null)
+                _mainCanvas = _assetProvider.Instantiate<Canvas>(AssetPath.MainCanvasPath);
+            Object.DontDestroyOnLoad(_mainCanvas);
+        }
+
+        public StartPopup GetStartPopup()
         {
             if (_startPopup == null)
             {
                 _startPopup = _assetProvider.Instantiate<StartPopup>(AssetPath.StartPopupPath);
-                Object.DontDestroyOnLoad(_startPopup);
+                AddToMainCanvas(_startPopup);
             }
             return _startPopup;
         }
 
-        public OverlayPopup CreateOverlayPopup()
+        public OverlayPopup GetOverlayPopup()
         {
             if (_overlayPopup == null)
             {
                 _overlayPopup = _assetProvider.Instantiate<OverlayPopup>(AssetPath.OverlayPopupPath);
-                Object.DontDestroyOnLoad(_overlayPopup);
+                AddToMainCanvas(_overlayPopup);
             }
             return _overlayPopup;
         }
 
-        public WinPopup CreateWinPopup()
+        public WinPopup GetWinPopup()
         {
             if (_winPopup == null)
             {
                 _winPopup = _assetProvider.Instantiate<WinPopup>(AssetPath.WinPopupPath);
-                Object.DontDestroyOnLoad(_winPopup);
+                AddToMainCanvas(_winPopup);
             }
             return _winPopup;
         }
 
-        public LosePopup CreateLoosePopup()
+        public LosePopup GetLosePopup()
         {
             if (_losePopup == null)
             {
                 _losePopup = _assetProvider.Instantiate<LosePopup>(AssetPath.LosePopupPath);
-                Object.DontDestroyOnLoad(_losePopup);
+                AddToMainCanvas(_losePopup);
             }
             return _losePopup;
+        }
+
+        private void AddToMainCanvas(Popup popup)
+        {
+            popup.transform.SetParent(_mainCanvas.transform);
+            popup.GetComponent<Canvas>().overrideSorting = true;
         }
     }
 }

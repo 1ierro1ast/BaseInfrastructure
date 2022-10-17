@@ -11,7 +11,6 @@ namespace Codebase.Infrastructure.GameFlow.States
 {
     public class BootstrapState : IState
     {
-        private const string BootSceneName = "BootScene";
         private const string NextSceneName = "MainScene";
 
         private readonly GameStateMachine _stateMachine;
@@ -50,11 +49,11 @@ namespace Codebase.Infrastructure.GameFlow.States
             RegisterSaveLoadService();
 
             RegisterGameVariables();
-            RegisterAnalyticsModule();
+            RegisterEventBus();
             RegisterAdsModule();
+            RegisterAnalyticsModule();
             RegisterTemporaryLevelVariables();
-            RegisterGameFlow();
-            RegisterPopupFactory();
+            RegisterUiFactory();
 
             RegisterLevelFactory();
         }
@@ -68,15 +67,15 @@ namespace Codebase.Infrastructure.GameFlow.States
         private void RegisterAnalyticsModule()
         {
             _services.RegisterSingle<IAnalyticsModule>(
-                new AnalyticsModule(_services.Single<IGameVariables>()));
+                new AnalyticsModule(_services.Single<IGameVariables>(), _services.Single<IEventBus>()));
         }
-        
+
         private void RegisterTemporaryLevelVariables()
         {
             _services.RegisterSingle<ITemporaryLevelVariables>(
                 new TemporaryLevelVariables());
         }
-        
+
         private void RegisterAssetProvider()
         {
             _services.RegisterSingle<IAssetProvider>(new AssetProvider());
@@ -100,13 +99,13 @@ namespace Codebase.Infrastructure.GameFlow.States
                     _services.Single<ITemporaryLevelVariables>()));
         }
 
-        private void RegisterGameFlow()
+        private void RegisterEventBus()
         {
             _services.RegisterSingle<IEventBus>(
                 new EventBus());
         }
 
-        private void RegisterPopupFactory()
+        private void RegisterUiFactory()
         {
             _services.RegisterSingle<IUiFactory>(
                 new UiFactory(_services.Single<IAssetProvider>()));

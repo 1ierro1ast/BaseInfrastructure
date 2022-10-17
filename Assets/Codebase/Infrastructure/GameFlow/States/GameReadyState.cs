@@ -39,7 +39,7 @@ namespace Codebase.Infrastructure.GameFlow.States
         {
             _temporaryLevelVariables.ClearData();
             
-            _startPopup = _uiFactory.CreateStartPopup();
+            _startPopup = _uiFactory.GetStartPopup();
             _startPopup.OpenPopup();
             _startPopup.StartButtonClickEvent += StartPopup_OnStartButtonClickEvent;
             
@@ -61,8 +61,9 @@ namespace Codebase.Infrastructure.GameFlow.States
 
         private IEnumerator GoToGameCoroutine()
         {
+            yield return new WaitForSeconds(0.5f);
             _startPopup.ClosePopup();
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
             _gameStateMachine.Enter<GameplayState>();
         }
     }

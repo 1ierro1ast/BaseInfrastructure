@@ -7,5 +7,6 @@
         public const string OverlayPopupPath = "UI/Popups/OverlayPopup";
         public const string WinPopupPath = "UI/Popups/WinPopup";
         public const string LosePopupPath = "UI/Popups/LosePopup";
+        public const string MainCanvasPath = "UI/MainCanvas";
     }
 }

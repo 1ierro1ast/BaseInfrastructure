@@ -4,9 +4,9 @@ namespace Codebase.Infrastructure.Services.Factories
 {
     public interface IUiFactory : IService
     {
-        StartPopup CreateStartPopup();
-        OverlayPopup CreateOverlayPopup();
-        WinPopup CreateWinPopup();
-        LosePopup CreateLoosePopup();
+        StartPopup GetStartPopup();
+        OverlayPopup GetOverlayPopup();
+        WinPopup GetWinPopup();
+        LosePopup GetLosePopup();
     }
 }

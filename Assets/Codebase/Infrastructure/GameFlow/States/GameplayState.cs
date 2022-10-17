@@ -42,7 +42,7 @@ namespace Codebase.Infrastructure.GameFlow.States
         {
             _temporaryLevelVariables.IsWin = false;
             _loadingCurtain.ClosePopup();
-            _overlayPopup = _uiFactory.CreateOverlayPopup();
+            _overlayPopup = _uiFactory.GetOverlayPopup();
             _overlayPopup.OpenPopup();
 
             _eventBus.BroadcastGamePlayStart();

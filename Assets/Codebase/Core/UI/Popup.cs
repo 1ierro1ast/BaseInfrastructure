@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,8 +15,6 @@ namespace Codebase.Core.UI
         [SerializeField] private Animator[] _animators;
         [SerializeField] private Button _closePopupButton;
         [SerializeField] private Button _secondClosePopupButton;
-
-        public static event Action<bool> PopupActionButtonPressedEvent;
 
         private const string AnimatorOpenPopupBoolKey = "IsOpen";
         private static readonly int Open = Animator.StringToHash(AnimatorOpenPopupBoolKey);

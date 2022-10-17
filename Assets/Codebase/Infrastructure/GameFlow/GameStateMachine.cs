@@ -30,10 +30,10 @@ namespace Codebase.Infrastructure.GameFlow
                     loadingCurtain),
 
                 [typeof(WinState)] = new WinState(this, services.Single<IUiFactory>(),
-                    services.Single<IGameVariables>(), loadingCurtain),
+                    services.Single<IGameVariables>(), loadingCurtain, coroutineRunner),
 
-                [typeof(LoseState)] = new LoseState(this, services.Single<IUiFactory>(),
-                    services.Single<IGameVariables>(), loadingCurtain)
+                [typeof(LoseState)] = new LoseState(this, services.Single<IUiFactory>(), loadingCurtain, 
+                    coroutineRunner)
             };
         }
     }
