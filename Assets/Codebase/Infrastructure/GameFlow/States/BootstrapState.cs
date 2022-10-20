@@ -5,6 +5,7 @@ using Codebase.Infrastructure.Services.AssetManagement;
 using Codebase.Infrastructure.Services.DataStorage;
 using Codebase.Infrastructure.Services.Factories;
 using Codebase.Infrastructure.Services.SaveLoad;
+using Codebase.Infrastructure.Services.Settings;
 using Codebase.Infrastructure.StateMachine;
 
 namespace Codebase.Infrastructure.GameFlow.States
@@ -47,6 +48,7 @@ namespace Codebase.Infrastructure.GameFlow.States
         {
             RegisterAssetProvider();
             RegisterSaveLoadService();
+            RegisterGameSettings();
 
             RegisterGameVariables();
             RegisterEventBus();
@@ -56,6 +58,13 @@ namespace Codebase.Infrastructure.GameFlow.States
             RegisterUiFactory();
 
             RegisterLevelFactory();
+        }
+
+        private void RegisterGameSettings()
+        {
+            GameSettings gameSettings = _services.Single<IAssetProvider>()
+                .GetScriptableObject<GameSettings>(AssetPath.GameSettingsPath);
+            _services.RegisterSingle<IGameSettings>(gameSettings);
         }
 
         private void RegisterAdsModule()
