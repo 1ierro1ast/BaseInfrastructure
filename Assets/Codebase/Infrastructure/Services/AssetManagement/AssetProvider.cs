@@ -70,12 +70,12 @@ namespace Codebase.Infrastructure.Services.AssetManagement
             return Object.Instantiate(prefab, parent);
         }
 
-        public T[] GetAllObjects<T>(string path) where T : Object
+        public T GetObject<T>(string path) where T : Object
         {
-            return Resources.LoadAll<T>(path);
+            return Resources.Load<T>(path);
         }
 
-        public T[] GetAllScriptableObjects<T>(string path) where T : ScriptableObject
+        public T[] GetAllObjects<T>(string path) where T : Object
         {
             return Resources.LoadAll<T>(path);
         }
@@ -83,6 +83,11 @@ namespace Codebase.Infrastructure.Services.AssetManagement
         public T GetScriptableObject<T>(string path) where T : ScriptableObject
         {
             return Resources.Load<T>(path);
+        }
+
+        public T[] GetAllScriptableObjects<T>(string path) where T : ScriptableObject
+        {
+            return Resources.LoadAll<T>(path);
         }
 
         public int GetAssetAmount(string path)

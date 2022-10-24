@@ -20,10 +20,10 @@ namespace Codebase.Infrastructure.Services.AssetManagement
         T Instantiate<T>(T prefab, Vector3 at) where T : Object;
         T Instantiate<T>(T prefab, Transform parent) where T : Object;
 
+        T GetObject<T>(string path) where T : Object;
         T[] GetAllObjects<T>(string path) where T : Object;
+        T GetScriptableObject<T>(string path) where T : ScriptableObject;
         T[] GetAllScriptableObjects<T>(string path) where T : ScriptableObject;
         int GetAssetAmount(string path);
-        T GetScriptableObject<T>(string path) where T : ScriptableObject;
-
     }
 }
