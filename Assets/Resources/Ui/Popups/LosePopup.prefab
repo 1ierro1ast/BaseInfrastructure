@@ -26,6 +26,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5665144326744253469}
   m_Father: {fileID: 5665144326585866972}
@@ -62,6 +63,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5665144326090819519}
   m_Father: {fileID: 5665144326585866972}
@@ -85,7 +87,7 @@ GameObject:
   - component: {fileID: 5665144324913230072}
   - component: {fileID: 5665144324913230073}
   - component: {fileID: 5665144324913230054}
-  - component: {fileID: 9155938328942344621}
+  - component: {fileID: 8944613227107956874}
   m_Layer: 5
   m_Name: LosePopup
   m_TagString: Untagged
@@ -103,6 +105,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5665144326585866972}
   m_Father: {fileID: 0}
@@ -190,30 +193,30 @@ MonoBehaviour:
   _openDelay: 0.5
   _closeDelay: 0
   _closeAnimDuration: 0
-  _animators:
-  - {fileID: 9155938328942344621}
+  _animations:
+  - {fileID: 8944613227107956874}
   _closePopupButton: {fileID: 0}
   _secondClosePopupButton: {fileID: 0}
+  _openPopupKey: OpenFade
+  _closePopupKey: CloseFade
   _retryButton: {fileID: 5665144326090819518}
---- !u!95 &9155938328942344621
-Animator:
-  serializedVersion: 3
+--- !u!111 &8944613227107956874
+Animation:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5665144324913230052}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 13efbc9892a2d0b4da827ed89f3a1eb9, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 2
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 6e87b5d1a8fb96b488c05f231e846978, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 6e87b5d1a8fb96b488c05f231e846978, type: 2}
+  - {fileID: 7400000, guid: 850db300f0fa0cc40a36d4b0b040f902, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &5665144325845138500
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,6 +245,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5665144326585866972}
   m_RootOrder: 0
@@ -318,6 +322,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6925715766619511147}
   m_Father: {fileID: 3268941105447860804}
@@ -438,6 +443,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5665144325845138503}
   - {fileID: 8337080760809712364}
@@ -499,6 +505,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8337080760809712364}
   m_RootOrder: 0
@@ -572,6 +579,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5665144326585866972}
   m_RootOrder: 2
@@ -609,6 +617,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5665144326090819519}
   m_RootOrder: 0
