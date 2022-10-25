@@ -30,7 +30,6 @@ namespace Codebase.Core.UI.Popups
         private void EventBus_OnGamePlayStart()
         {
             Debug.Log("Game play start");
-            ClosePopup();
         }
 
         private void OnStartButtonClick()
