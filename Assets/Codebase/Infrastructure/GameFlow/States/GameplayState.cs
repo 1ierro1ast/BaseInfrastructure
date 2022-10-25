@@ -41,7 +41,6 @@ namespace Codebase.Infrastructure.GameFlow.States
         public void Enter()
         {
             _temporaryLevelVariables.IsWin = false;
-            _loadingCurtain.ClosePopup();
             _overlayPopup = _uiFactory.GetOverlayPopup();
             _overlayPopup.OpenPopup();
 

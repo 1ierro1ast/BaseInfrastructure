@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 5665144324913230072}
   - component: {fileID: 5665144324913230073}
   - component: {fileID: 5665144324913230054}
+  - component: {fileID: 2327879379731745313}
   - component: {fileID: 8944613227107956874}
   m_Layer: 5
   m_Name: LosePopup
@@ -190,16 +191,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _body: {fileID: 5665144326585866973}
-  _openDelay: 0.5
-  _closeDelay: 0
-  _closeAnimDuration: 0
-  _animations:
-  - {fileID: 8944613227107956874}
+  _popupAnimations:
+  - {fileID: 2327879379731745313}
   _closePopupButton: {fileID: 0}
   _secondClosePopupButton: {fileID: 0}
-  _openPopupKey: OpenFade
-  _closePopupKey: CloseFade
   _retryButton: {fileID: 5665144326090819518}
+--- !u!114 &2327879379731745313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5665144324913230052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2fe260b4786adb4f8a0071f8b5c1691, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _openAnimation: {fileID: 7400000, guid: 6e87b5d1a8fb96b488c05f231e846978, type: 2}
+  _closeAnimation: {fileID: 7400000, guid: 850db300f0fa0cc40a36d4b0b040f902, type: 2}
+  _animation: {fileID: 8944613227107956874}
 --- !u!111 &8944613227107956874
 Animation:
   m_ObjectHideFlags: 0
@@ -209,7 +220,7 @@ Animation:
   m_GameObject: {fileID: 5665144324913230052}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 6e87b5d1a8fb96b488c05f231e846978, type: 2}
+  m_Animation: {fileID: 0}
   m_Animations:
   - {fileID: 7400000, guid: 6e87b5d1a8fb96b488c05f231e846978, type: 2}
   - {fileID: 7400000, guid: 850db300f0fa0cc40a36d4b0b040f902, type: 2}

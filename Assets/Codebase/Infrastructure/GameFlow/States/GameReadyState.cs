@@ -37,6 +37,7 @@ namespace Codebase.Infrastructure.GameFlow.States
 
         public void Enter()
         {
+            _loadingCurtain.OpenPopup();
             _temporaryLevelVariables.ClearData();
             
             _startPopup = _uiFactory.GetStartPopup();
@@ -55,7 +56,6 @@ namespace Codebase.Infrastructure.GameFlow.States
 
         private void StartPopup_OnStartButtonClickEvent()
         {
-            _loadingCurtain.OpenPopup();
             _coroutineRunner.StartCoroutine(GoToGameCoroutine());
         }
 

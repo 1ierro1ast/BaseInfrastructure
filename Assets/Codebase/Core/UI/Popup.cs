@@ -32,6 +32,8 @@ namespace Codebase.Core.UI
 
         public void OpenPopup()
         {
+            if (_isOpen) return;
+
             _isOpen = true;
             gameObject.SetActive(true);
 
@@ -44,6 +46,8 @@ namespace Codebase.Core.UI
 
         public void ClosePopup()
         {
+            if (!_isOpen) return;
+
             _isOpen = false;
 
             if (!gameObject.activeInHierarchy)
@@ -68,15 +72,6 @@ namespace Codebase.Core.UI
         }
 
         #endregion Callbacks
-
-        #region FromAnimation
-
-        private void ClosePopupFromAnimation()
-        {
-            _body.SetActive(false);
-        }
-
-        #endregion FromAnimation
 
         private void PlayAnimation(bool isOpen)
         {

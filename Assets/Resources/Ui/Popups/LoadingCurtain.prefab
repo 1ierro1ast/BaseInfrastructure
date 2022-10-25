@@ -193,9 +193,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _body: {fileID: 7498434506155886439}
-  _openDelay: 0.5
-  _closeDelay: 0
-  _closeAnimDuration: 0
   _popupAnimations:
   - {fileID: 1004541687372301180}
   _closePopupButton: {fileID: 0}
@@ -212,9 +209,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2fe260b4786adb4f8a0071f8b5c1691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _openAnimation: {fileID: 7400000, guid: 6e87b5d1a8fb96b488c05f231e846978, type: 2}
+  _closeAnimation: {fileID: 7400000, guid: 850db300f0fa0cc40a36d4b0b040f902, type: 2}
   _animation: {fileID: 786975631}
-  _openPopupKey: Open
-  _closePopupKey: Close
 --- !u!111 &786975631
 Animation:
   m_ObjectHideFlags: 0
@@ -224,12 +221,12 @@ Animation:
   m_GameObject: {fileID: 7498434504476406181}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 911fc98636f68394eb19eff45e87eb7e, type: 2}
+  m_Animation: {fileID: 0}
   m_Animations:
+  - {fileID: 7400000, guid: 6e87b5d1a8fb96b488c05f231e846978, type: 2}
   - {fileID: 7400000, guid: 850db300f0fa0cc40a36d4b0b040f902, type: 2}
-  - {fileID: 7400000, guid: 911fc98636f68394eb19eff45e87eb7e, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
 --- !u!1 &7498434506155886439
