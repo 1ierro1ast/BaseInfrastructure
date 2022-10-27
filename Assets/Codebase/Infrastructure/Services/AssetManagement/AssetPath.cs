@@ -1,6 +1,6 @@
 ﻿namespace Codebase.Infrastructure.Services.AssetManagement
 {
-    public static class AssetPath
+    public static partial class AssetPath
     {
         public const string LevelsPath = "Levels";
         public const string GameSettingsPath = "Settings/GameSettings";

@@ -64,7 +64,7 @@ namespace Codebase.Infrastructure.GameFlow.States
         {
             GameSettings gameSettings = _services.Single<IAssetProvider>()
                 .GetScriptableObject<GameSettings>(AssetPath.GameSettingsPath);
-            _services.RegisterSingle<IGameSettings>(gameSettings);
+            _services.RegisterSingle(gameSettings);
         }
 
         private void RegisterAdsModule()
