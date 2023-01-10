@@ -6,20 +6,18 @@ namespace Codebase.Core.UI
     public abstract class Popup : MonoBehaviour
     {
         [Header("Open/Close Settings")]
-        [SerializeField]
-        private GameObject _body;
+        [SerializeField] private GameObject _body;
+        [SerializeField] private bool _isOpen;
 
         [SerializeField] private BasePopupAnimation[] _popupAnimations;
         [SerializeField] private Button _closePopupButton;
         [SerializeField] private Button _secondClosePopupButton;
-        private bool _isOpen;
 
         public bool IsOpen => _isOpen;
 
         private void Awake()
         {
-            _isOpen = false;
-            _body.SetActive(false);
+            _body.SetActive(_isOpen);
 
             _closePopupButton?.onClick.AddListener(OnClosePopupButtonClick);
             _secondClosePopupButton?.onClick.AddListener(OnClosePopupButtonClick);
