@@ -14,18 +14,15 @@ namespace Codebase.Infrastructure.GameFlow.States
         private readonly IUiFactory _uiFactory;
         private readonly GameStateMachine _gameStateMachine;
         private readonly ITemporaryLevelVariables _temporaryLevelVariables;
-        private readonly IEventBus _eventBus;
         private readonly LoadingCurtain _loadingCurtain;
         private StartPopup _startPopup;
 
         public GameReadyState(GameStateMachine gameStateMachine, IUiFactory uiFactory,
-            ITemporaryLevelVariables temporaryLevelVariables, IEventBus eventBus,
-            LoadingCurtain loadingCurtain)
+            ITemporaryLevelVariables temporaryLevelVariables, LoadingCurtain loadingCurtain)
         {
             _uiFactory = uiFactory;
             _gameStateMachine = gameStateMachine;
             _temporaryLevelVariables = temporaryLevelVariables;
-            _eventBus = eventBus;
             _loadingCurtain = loadingCurtain;
         }
 
@@ -43,7 +40,9 @@ namespace Codebase.Infrastructure.GameFlow.States
             _startPopup.OpenPopup();
             _startPopup.OnStartButtonClick += StartButtonClick;
 
-            _eventBus.BroadcastLevelLoaded();
+            MessageBroker.Default
+                .Publish(new GameLevelMessage(LevelMessage.Loaded));
+
             MainThreadDispatcher.StartUpdateMicroCoroutine(CloseCurtainCoroutine());
         }
 

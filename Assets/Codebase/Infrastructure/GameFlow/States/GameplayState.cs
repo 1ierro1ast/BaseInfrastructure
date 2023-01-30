@@ -38,7 +38,8 @@ namespace Codebase.Infrastructure.GameFlow.States
             _overlayPopup = _uiFactory.GetOverlayPopup();
             _overlayPopup.OpenPopup();
 
-            _eventBus.BroadcastGamePlayStart();
+            MessageBroker.Default
+                .Publish(new GameLevelMessage(LevelMessage.Started));
 
             _eventBus.OnPlayerWinEvent += PlayerWinEvent;
             _eventBus.OnPlayerLoseEvent += PlayerLoseEvent;

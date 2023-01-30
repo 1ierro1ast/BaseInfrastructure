@@ -18,8 +18,7 @@ namespace Codebase.Infrastructure.GameFlow
                 [typeof(BootstrapState)] = new BootstrapState(this, services),
 
                 [typeof(GameReadyState)] = new GameReadyState(this, services.Single<IUiFactory>(),
-                    services.Single<ITemporaryLevelVariables>(), services.Single<IEventBus>(),
-                    loadingCurtain),
+                    services.Single<ITemporaryLevelVariables>(), loadingCurtain),
 
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingCurtain,
                     services.Single<ILevelFactory>(), services.Single<IGameVariables>()),

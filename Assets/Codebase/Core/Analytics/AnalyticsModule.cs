@@ -2,6 +2,7 @@
 using Codebase.Infrastructure.Services;
 using Codebase.Infrastructure.Services.DataStorage;
 using System;
+using UniRx;
 using UnityEngine;
 
 namespace Codebase.Core.Analytics
@@ -21,12 +22,16 @@ namespace Codebase.Core.Analytics
             _eventBus = eventBus;
             _sceneService = sceneService;
 
-            _eventBus.GamePlayStartEvent += EventBus_OnGamePlayStartEvent;
+            MessageBroker.Default
+                .Receive<GameLevelMessage>()
+                .Where(msg => msg.Message == LevelMessage.Started)
+                .Subscribe(_ => GamePlayStart());
+
             _eventBus.OnPlayerWinEvent += EventBus_OnPlayerWinEvent;
             _eventBus.OnPlayerLoseEvent += EventBus_OnPlayerLoseEvent;
         }
 
-        private void EventBus_OnGamePlayStartEvent()
+        private void GamePlayStart()
         {
             LevelStart();
         }
