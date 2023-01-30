@@ -113,10 +113,7 @@ namespace Codebase.Infrastructure.GameFlow.States
 
         private void RegisterLevelFactory()
         {
-            _services.RegisterSingle<ILevelFactory>(
-                new LevelFactory(_services.Single<IAssetProvider>(),
-                    _services.Single<IGameVariables>(),
-                    _services.Single<ITemporaryLevelVariables>()));
+            _services.RegisterSingle<ILevelFactory>(new LevelFactory(_services.Single<IAssetProvider>()));
         }
 
         private void RegisterEventBus()
