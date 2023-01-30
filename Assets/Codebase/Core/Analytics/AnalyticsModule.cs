@@ -1,6 +1,7 @@
-﻿using System;
-using Codebase.Infrastructure.GameFlow;
+﻿using Codebase.Infrastructure.GameFlow;
+using Codebase.Infrastructure.Services;
 using Codebase.Infrastructure.Services.DataStorage;
+using System;
 using UnityEngine;
 
 namespace Codebase.Core.Analytics
@@ -9,18 +10,20 @@ namespace Codebase.Core.Analytics
     {
         private readonly IGameVariables _gameVariables;
         private readonly IEventBus _eventBus;
+        private readonly ISceneService _sceneService;
         private DateTime _startTime;
         private DateTime _finishTime;
         private const string ModuleTag = "[AnalyticsModule]: ";
-        
-        public AnalyticsModule(IGameVariables gameVariables, IEventBus eventBus)
+
+        public AnalyticsModule(IGameVariables gameVariables, IEventBus eventBus, ISceneService sceneService)
         {
             _gameVariables = gameVariables;
             _eventBus = eventBus;
-            
+            _sceneService = sceneService;
+
             _eventBus.GamePlayStartEvent += EventBus_OnGamePlayStartEvent;
-            _eventBus.PlayerWinEvent += EventBus_OnPlayerWinEvent;
-            _eventBus.PlayerLoseEvent += EventBus_OnPlayerLoseEvent;
+            _eventBus.OnPlayerWinEvent += EventBus_OnPlayerWinEvent;
+            _eventBus.OnPlayerLoseEvent += EventBus_OnPlayerLoseEvent;
         }
 
         private void EventBus_OnGamePlayStartEvent()

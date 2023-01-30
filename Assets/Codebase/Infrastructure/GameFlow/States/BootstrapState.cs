@@ -12,8 +12,6 @@ namespace Codebase.Infrastructure.GameFlow.States
 {
     public class BootstrapState : IState
     {
-        private const string NextSceneName = "MainScene";
-
         private readonly GameStateMachine _stateMachine;
         private readonly AllServices _services;
 
@@ -36,7 +34,10 @@ namespace Codebase.Infrastructure.GameFlow.States
 
         private void EnterLoadLevel()
         {
-            _stateMachine.Enter<LoadLevelState, string>(NextSceneName);
+            var sceneService = _services.Single<ISceneService>();
+            var settings = sceneService.GetCurrentSceneSettings();
+
+            _stateMachine.Enter<LoadLevelState, string>(settings.SceneName);
         }
 
         private void RegisterServices()
@@ -45,6 +46,7 @@ namespace Codebase.Infrastructure.GameFlow.States
             RegisterGetSetService();
             RegisterSaveLoadService();
             RegisterGameSettings();
+            RegisterSceneService();
 
             RegisterGameVariables();
             RegisterEventBus();
@@ -59,8 +61,14 @@ namespace Codebase.Infrastructure.GameFlow.States
         private void RegisterGameSettings()
         {
             GameSettings gameSettings = _services.Single<IAssetProvider>()
-                .GetScriptableObject<GameSettings>(AssetPath.GameSettingsPath);
+                .GetScriptableObject<GameSettings>(AssetPath.GameSettings);
             _services.RegisterSingle(gameSettings);
+        }
+
+        private void RegisterSceneService()
+        {
+            _services.RegisterSingle<ISceneService>(new SceneService(_services.Single<IAssetProvider>(),
+                _services.Single<ISaveLoadService>(), AssetPath.SceneSettings));
         }
 
         private void RegisterAdsModule()
@@ -72,7 +80,8 @@ namespace Codebase.Infrastructure.GameFlow.States
         private void RegisterAnalyticsModule()
         {
             _services.RegisterSingle<IAnalyticsModule>(
-                new AnalyticsModule(_services.Single<IGameVariables>(), _services.Single<IEventBus>()));
+                new AnalyticsModule(_services.Single<IGameVariables>(), _services.Single<IEventBus>(),
+                _services.Single<ISceneService>()));
         }
 
         private void RegisterTemporaryLevelVariables()

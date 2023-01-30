@@ -8,8 +8,8 @@ namespace Codebase.Infrastructure.GameFlow
         event Action LevelLoadedEvent;
         event Action GamePlayStartEvent;
         event Action LevelFinishedEvent;
-        event Action PlayerWinEvent;
-        event Action PlayerLoseEvent;
+        event Action OnPlayerWinEvent;
+        event Action OnPlayerLoseEvent;
 
         void BroadcastLevelLoaded();
         void BroadcastGamePlayStart();

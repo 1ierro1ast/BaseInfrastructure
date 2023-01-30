@@ -8,7 +8,7 @@ namespace Codebase.Core.UI.Popups
 {
     public class StartPopup : Popup
     {
-        public event Action StartButtonClickEvent;
+        public event Action OnStartButtonClick;
         [SerializeField] private Button _startButton;
         private IEventBus _eventBus;
 
@@ -16,7 +16,7 @@ namespace Codebase.Core.UI.Popups
         {
             base.OnInitialization();
             OpenPopup();
-            _startButton.onClick.AddListener(OnStartButtonClick);
+            _startButton.onClick.AddListener(StartButtonClick);
             _eventBus = AllServices.Container.Single<IEventBus>();
             
             _eventBus.GamePlayStartEvent += EventBus_OnGamePlayStart;
@@ -32,9 +32,9 @@ namespace Codebase.Core.UI.Popups
             Debug.Log("Game play start");
         }
 
-        private void OnStartButtonClick()
+        private void StartButtonClick()
         {
-            StartButtonClickEvent?.Invoke();
+            OnStartButtonClick?.Invoke();
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Codebase.Core.Ads;
-using Codebase.Core.UI;
+﻿using Codebase.Core.UI;
 using Codebase.Infrastructure.Services.DataStorage;
 using Codebase.Infrastructure.Services.Factories;
 using Codebase.Infrastructure.StateMachine;

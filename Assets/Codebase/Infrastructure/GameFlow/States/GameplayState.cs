@@ -1,5 +1,4 @@
-﻿using Codebase.Core.UI;
-using Codebase.Core.UI.Popups;
+﻿using Codebase.Core.UI.Popups;
 using Codebase.Infrastructure.Services.DataStorage;
 using Codebase.Infrastructure.Services.Factories;
 using Codebase.Infrastructure.StateMachine;
@@ -29,8 +28,8 @@ namespace Codebase.Infrastructure.GameFlow.States
 
         public void Exit()
         {
-            _eventBus.PlayerWinEvent -= EventBus_OnPlayerWinEvent;
-            _eventBus.PlayerLoseEvent -= EventBus_OnPlayerLoseEvent;
+            _eventBus.OnPlayerWinEvent -= PlayerWinEvent;
+            _eventBus.OnPlayerLoseEvent -= PlayerLoseEvent;
         }
 
         public void Enter()
@@ -41,17 +40,17 @@ namespace Codebase.Infrastructure.GameFlow.States
 
             _eventBus.BroadcastGamePlayStart();
 
-            _eventBus.PlayerWinEvent += EventBus_OnPlayerWinEvent;
-            _eventBus.PlayerLoseEvent += EventBus_OnPlayerLoseEvent;
+            _eventBus.OnPlayerWinEvent += PlayerWinEvent;
+            _eventBus.OnPlayerLoseEvent += PlayerLoseEvent;
         }
 
-        private void EventBus_OnPlayerLoseEvent()
+        private void PlayerLoseEvent()
         {
             _eventBus.BroadcastLevelFinished();
             MainThreadDispatcher.StartUpdateMicroCoroutine(LoseCoroutine());
         }
 
-        private void EventBus_OnPlayerWinEvent()
+        private void PlayerWinEvent()
         {
             _eventBus.BroadcastLevelFinished();
             MainThreadDispatcher.StartUpdateMicroCoroutine(WinCoroutine());

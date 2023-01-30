@@ -31,7 +31,7 @@ namespace Codebase.Infrastructure.GameFlow.States
 
         public void Exit()
         {
-            _startPopup.StartButtonClickEvent -= StartButtonClick;
+            _startPopup.OnStartButtonClick -= StartButtonClick;
         }
 
         public void Enter()
@@ -41,7 +41,7 @@ namespace Codebase.Infrastructure.GameFlow.States
 
             _startPopup = _uiFactory.GetStartPopup();
             _startPopup.OpenPopup();
-            _startPopup.StartButtonClickEvent += StartButtonClick;
+            _startPopup.OnStartButtonClick += StartButtonClick;
 
             _eventBus.BroadcastLevelLoaded();
             MainThreadDispatcher.StartUpdateMicroCoroutine(CloseCurtainCoroutine());

@@ -33,7 +33,7 @@ namespace Codebase.Infrastructure.Services.Factories
         private void CreateMainCanvas()
         {
             if (_mainCanvas == null)
-                _mainCanvas = _assetProvider.Instantiate<Canvas>(AssetPath.MainCanvasPath);
+                _mainCanvas = _assetProvider.Instantiate<Canvas>(AssetPath.MainCanvas);
             Object.DontDestroyOnLoad(_mainCanvas);
         }
 
@@ -41,7 +41,7 @@ namespace Codebase.Infrastructure.Services.Factories
         {
             if (_startPopup == null)
             {
-                _startPopup = _assetProvider.Instantiate<StartPopup>(AssetPath.StartPopupPath);
+                _startPopup = _assetProvider.Instantiate<StartPopup>(AssetPath.StartPopup);
                 AddToMainCanvas(_startPopup);
             }
             return _startPopup;
@@ -51,7 +51,7 @@ namespace Codebase.Infrastructure.Services.Factories
         {
             if (_overlayPopup == null)
             {
-                _overlayPopup = _assetProvider.Instantiate<OverlayPopup>(AssetPath.OverlayPopupPath);
+                _overlayPopup = _assetProvider.Instantiate<OverlayPopup>(AssetPath.OverlayPopup);
                 AddToMainCanvas(_overlayPopup);
             }
             return _overlayPopup;
@@ -61,7 +61,7 @@ namespace Codebase.Infrastructure.Services.Factories
         {
             if (_winPopup == null)
             {
-                _winPopup = _assetProvider.Instantiate<WinPopup>(AssetPath.WinPopupPath);
+                _winPopup = _assetProvider.Instantiate<WinPopup>(AssetPath.WinPopup);
                 AddToMainCanvas(_winPopup);
             }
             return _winPopup;
@@ -71,7 +71,7 @@ namespace Codebase.Infrastructure.Services.Factories
         {
             if (_losePopup == null)
             {
-                _losePopup = _assetProvider.Instantiate<LosePopup>(AssetPath.LosePopupPath);
+                _losePopup = _assetProvider.Instantiate<LosePopup>(AssetPath.LosePopup);
                 AddToMainCanvas(_losePopup);
             }
             return _losePopup;

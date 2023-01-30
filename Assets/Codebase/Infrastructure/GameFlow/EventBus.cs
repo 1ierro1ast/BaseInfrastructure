@@ -8,8 +8,8 @@ namespace Codebase.Infrastructure.GameFlow
         public event Action GamePlayStartEvent;
         public event Action LevelFinishedEvent;
         
-        public event Action PlayerWinEvent;
-        public event Action PlayerLoseEvent;
+        public event Action OnPlayerWinEvent;
+        public event Action OnPlayerLoseEvent;
 
         public void BroadcastLevelLoaded()
         {
@@ -28,12 +28,12 @@ namespace Codebase.Infrastructure.GameFlow
 
         public void BroadcastPlayerWin()
         {
-            PlayerWinEvent?.Invoke();
+            OnPlayerWinEvent?.Invoke();
         }
 
         public void BroadcastPlayerLose()
         {
-           PlayerLoseEvent?.Invoke();
+           OnPlayerLoseEvent?.Invoke();
         }
     }
 }

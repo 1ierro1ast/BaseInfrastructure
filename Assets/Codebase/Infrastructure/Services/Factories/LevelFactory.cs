@@ -16,13 +16,13 @@ namespace Codebase.Infrastructure.Services.Factories
             ITemporaryLevelVariables temporaryLevelVariables)
         {
             _assetProvider = assetProvider;
-            _levelsAmount = _assetProvider.GetAssetAmount(AssetPath.LevelsPath);
+            _levelsAmount = _assetProvider.GetAssetAmount(AssetPath.Levels);
         }
 
         public void CreateLevel(int levelNumber, Action levelOnReady = null)
         {
-            var levels = _assetProvider.GetAllObjects<Level>(AssetPath.LevelsPath);
-            string levelPath = AssetPath.LevelsPath + "/";
+            var levels = _assetProvider.GetAllObjects<Level>(AssetPath.Levels);
+            string levelPath = AssetPath.Levels + "/";
             if (levelNumber > levels.Length - 1)
             {
                 levelPath = levelPath + "Level" + Random.Range(1, _levelsAmount+1);

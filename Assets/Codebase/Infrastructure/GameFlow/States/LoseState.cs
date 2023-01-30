@@ -1,5 +1,6 @@
 ﻿using Codebase.Core.UI;
 using Codebase.Core.UI.Popups;
+using Codebase.Infrastructure.Services;
 using Codebase.Infrastructure.Services.Factories;
 using Codebase.Infrastructure.StateMachine;
 using System.Collections;
@@ -13,13 +14,16 @@ namespace Codebase.Infrastructure.GameFlow.States
         private readonly GameStateMachine _gameStateMachine;
         private readonly IUiFactory _uiFactory;
         private readonly LoadingCurtain _loadingCurtain;
+        private readonly ISceneService _sceneService;
         private LosePopup _popup;
 
-        public LoseState(GameStateMachine gameStateMachine, IUiFactory uiFactory, LoadingCurtain loadingCurtain)
+        public LoseState(GameStateMachine gameStateMachine, IUiFactory uiFactory,
+            LoadingCurtain loadingCurtain, ISceneService sceneService)
         {
             _gameStateMachine = gameStateMachine;
             _uiFactory = uiFactory;
             _loadingCurtain = loadingCurtain;
+            _sceneService = sceneService;
         }
 
         public void Exit()
@@ -48,7 +52,8 @@ namespace Codebase.Infrastructure.GameFlow.States
             for (float t = 0f; t < duration; t += Time.deltaTime)
                 yield return null;
 
-            _gameStateMachine.Enter<LoadLevelState, string>("MainScene");
+            var settings = _sceneService.GetCurrentSceneSettings();
+            _gameStateMachine.Enter<LoadLevelState, string>(settings.SceneName);
         }
     }
 }

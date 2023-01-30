@@ -28,9 +28,10 @@ namespace Codebase.Infrastructure.GameFlow
                     services.Single<IUiFactory>(), services.Single<ITemporaryLevelVariables>()),
 
                 [typeof(WinState)] = new WinState(this, services.Single<IUiFactory>(),
-                    services.Single<IGameVariables>(), loadingCurtain),
+                    services.Single<IGameVariables>(), loadingCurtain, services.Single<ISceneService>()),
 
-                [typeof(LoseState)] = new LoseState(this, services.Single<IUiFactory>(), loadingCurtain)
+                [typeof(LoseState)] = new LoseState(this, services.Single<IUiFactory>(), loadingCurtain,
+                services.Single<ISceneService>())
             };
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Codebase.Core.UI;
 using Codebase.Core.UI.Popups;
+using Codebase.Infrastructure.Services;
 using Codebase.Infrastructure.Services.DataStorage;
 using Codebase.Infrastructure.Services.Factories;
 using Codebase.Infrastructure.StateMachine;
@@ -15,16 +16,17 @@ namespace Codebase.Infrastructure.GameFlow.States
         private readonly IUiFactory _uiFactory;
         private readonly IGameVariables _gameVariables;
         private readonly LoadingCurtain _loadingCurtain;
-
+        private readonly ISceneService _sceneService;
         private WinPopup _popup;
 
         public WinState(GameStateMachine gameStateMachine, IUiFactory uiFactory, IGameVariables gameVariables,
-            LoadingCurtain loadingCurtain)
+            LoadingCurtain loadingCurtain, ISceneService sceneService)
         {
             _gameStateMachine = gameStateMachine;
             _uiFactory = uiFactory;
             _gameVariables = gameVariables;
             _loadingCurtain = loadingCurtain;
+            _sceneService = sceneService;
         }
 
         public void Exit()
@@ -54,7 +56,11 @@ namespace Codebase.Infrastructure.GameFlow.States
                 yield return null;
 
             _gameVariables.IterateLevelNumber();
-            _gameStateMachine.Enter<LoadLevelState, string>("MainScene");
+
+            _sceneService.SetNextScene();
+            var settings = _sceneService.GetCurrentSceneSettings();
+
+            _gameStateMachine.Enter<LoadLevelState, string>(settings.SceneName);
         }
     }
 }
