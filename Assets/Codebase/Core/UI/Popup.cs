@@ -1,3 +1,4 @@
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +12,6 @@ namespace Codebase.Core.UI
 
         [SerializeField] private BasePopupAnimation[] _popupAnimations;
         [SerializeField] private Button _closePopupButton;
-        [SerializeField] private Button _secondClosePopupButton;
 
         public bool IsOpen => _isOpen;
 
@@ -19,8 +19,10 @@ namespace Codebase.Core.UI
         {
             _body.SetActive(_isOpen);
 
-            _closePopupButton?.onClick.AddListener(OnClosePopupButtonClick);
-            _secondClosePopupButton?.onClick.AddListener(OnClosePopupButtonClick);
+            _closePopupButton?
+                .OnClickAsObservable()
+                .Subscribe(_ => OnClosePopupButtonClick())
+                .AddTo(this);
 
             if (_popupAnimations.Length == 0)
                 Debug.LogWarning("Animation list is empty!");

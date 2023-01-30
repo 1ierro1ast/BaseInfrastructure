@@ -15,17 +15,12 @@ namespace Codebase.Infrastructure.GameFlow.States
         private const string NextSceneName = "MainScene";
 
         private readonly GameStateMachine _stateMachine;
-        private readonly SceneLoader _sceneLoader;
         private readonly AllServices _services;
-        private readonly ICoroutineRunner _coroutineRunner;
 
-        public BootstrapState(GameStateMachine stateMachine, SceneLoader sceneLoader, AllServices allServices,
-            ICoroutineRunner coroutineRunner)
+        public BootstrapState(GameStateMachine stateMachine, AllServices allServices)
         {
             _stateMachine = stateMachine;
-            _sceneLoader = sceneLoader;
             _services = allServices;
-            _coroutineRunner = coroutineRunner;
 
             RegisterServices();
         }
@@ -47,6 +42,7 @@ namespace Codebase.Infrastructure.GameFlow.States
         private void RegisterServices()
         {
             RegisterAssetProvider();
+            RegisterGetSetService();
             RegisterSaveLoadService();
             RegisterGameSettings();
 
@@ -90,6 +86,11 @@ namespace Codebase.Infrastructure.GameFlow.States
             _services.RegisterSingle<IAssetProvider>(new AssetProvider());
         }
 
+        private void RegisterGetSetService()
+        {
+            _services.RegisterSingle<IGetSetPrefsService>(new GetSetPrefsService());
+        }
+
         private void RegisterSaveLoadService()
         {
             _services.RegisterSingle<ISaveLoadService>(new SaveLoadService());
@@ -98,13 +99,13 @@ namespace Codebase.Infrastructure.GameFlow.States
         private void RegisterGameVariables()
         {
             _services.RegisterSingle<IGameVariables>(
-                new GameVariables(_services.Single<ISaveLoadService>()));
+                new GameVariables(_services.Single<IGetSetPrefsService>()));
         }
 
         private void RegisterLevelFactory()
         {
             _services.RegisterSingle<ILevelFactory>(
-                new LevelFactory(_services.Single<IAssetProvider>(), 
+                new LevelFactory(_services.Single<IAssetProvider>(),
                     _services.Single<IGameVariables>(),
                     _services.Single<ITemporaryLevelVariables>()));
         }

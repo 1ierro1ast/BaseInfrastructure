@@ -1,6 +1,4 @@
 using System;
-using Codebase.Core.Ads;
-using Codebase.Infrastructure.Services;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,8 +7,8 @@ namespace Codebase.Core.UI.Popups
     public class LosePopup : Popup
     {
         [SerializeField] private Button _retryButton;
-        
-        public event Action RetryLevelEvent;
+
+        public event Action OnRetryLevel;
 
         protected override void OnInitialization()
         {
@@ -32,7 +30,7 @@ namespace Codebase.Core.UI.Popups
 
         public void BroadcastRetryLevel()
         {
-            RetryLevelEvent?.Invoke();
+            OnRetryLevel?.Invoke();
         }
     }
 }

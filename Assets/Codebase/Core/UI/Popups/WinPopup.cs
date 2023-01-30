@@ -8,7 +8,7 @@ namespace Codebase.Core.UI.Popups
     {
         [SerializeField] private Button _nextButton;
         
-        public event Action NextLevelEvent;
+        public event Action OnNextLevel;
 
         protected override void OnInitialization()
         {
@@ -25,7 +25,7 @@ namespace Codebase.Core.UI.Popups
         private void OnNextButtonClick()
         {
             _nextButton.interactable = false;
-            NextLevelEvent?.Invoke();
+            OnNextLevel?.Invoke();
         }
     }
 }

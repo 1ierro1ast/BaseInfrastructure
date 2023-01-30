@@ -1,9 +1,10 @@
-﻿using System.Collections;
-using Codebase.Core.UI;
+﻿using Codebase.Core.UI;
 using Codebase.Core.UI.Popups;
 using Codebase.Infrastructure.Services.DataStorage;
 using Codebase.Infrastructure.Services.Factories;
 using Codebase.Infrastructure.StateMachine;
+using System.Collections;
+using UniRx;
 using UnityEngine;
 
 namespace Codebase.Infrastructure.GameFlow.States
@@ -14,42 +15,44 @@ namespace Codebase.Infrastructure.GameFlow.States
         private readonly IUiFactory _uiFactory;
         private readonly IGameVariables _gameVariables;
         private readonly LoadingCurtain _loadingCurtain;
-        private readonly ICoroutineRunner _coroutineRunner;
-        
+
         private WinPopup _popup;
 
         public WinState(GameStateMachine gameStateMachine, IUiFactory uiFactory, IGameVariables gameVariables,
-            LoadingCurtain loadingCurtain, ICoroutineRunner coroutineRunner)
+            LoadingCurtain loadingCurtain)
         {
             _gameStateMachine = gameStateMachine;
             _uiFactory = uiFactory;
             _gameVariables = gameVariables;
             _loadingCurtain = loadingCurtain;
-            _coroutineRunner = coroutineRunner;
         }
 
         public void Exit()
         {
             _popup.ClosePopup();
-            _popup.NextLevelEvent -= Popup_OnNextLevelEvent;
+            _popup.OnNextLevel -= NextLevel;
         }
 
         public void Enter()
         {
             _popup = _uiFactory.GetWinPopup();
             _popup.OpenPopup();
-            _popup.NextLevelEvent += Popup_OnNextLevelEvent;
+            _popup.OnNextLevel += NextLevel;
         }
 
-        private void Popup_OnNextLevelEvent()
+        private void NextLevel()
         {
-            _coroutineRunner.StartCoroutine(NextLevelCoroutine());
+            MainThreadDispatcher.StartUpdateMicroCoroutine(NextLevelCoroutine());
         }
-        
+
         private IEnumerator NextLevelCoroutine()
         {
             _loadingCurtain.OpenPopup();
-            yield return new WaitForSeconds(0.6f);
+
+            var duration = .6f;
+            for (float t = 0f; t < duration; t += Time.deltaTime)
+                yield return null;
+
             _gameVariables.IterateLevelNumber();
             _gameStateMachine.Enter<LoadLevelState, string>("MainScene");
         }

@@ -5,7 +5,7 @@ namespace Codebase.Infrastructure.Services.DataStorage
 {
     public class GameVariables : IGameVariables
     {
-        private readonly ISaveLoadService _saveLoadService;
+        private readonly IGetSetPrefsService _saveLoadService;
 
         public event Action<int> ChangeLevelNumberEvent;
         public event Action<int> ChangeCoinsCountEvent;
@@ -50,7 +50,7 @@ namespace Codebase.Infrastructure.Services.DataStorage
             }
         }
 
-        public GameVariables(ISaveLoadService saveLoadService)
+        public GameVariables(IGetSetPrefsService saveLoadService)
         {
             _saveLoadService = saveLoadService;
 
@@ -79,22 +79,22 @@ namespace Codebase.Infrastructure.Services.DataStorage
 
         public void LoadLevelNumber()
         {
-            _levelNumber = _saveLoadService.LoadInt(LevelNumberSaveKey, DefaultLevelNumber);
+            _levelNumber = _saveLoadService.GetInt(LevelNumberSaveKey, DefaultLevelNumber);
         }
 
         public void SaveLevelNumber()
         {
-            _saveLoadService.SaveInt(LevelNumberSaveKey, _levelNumber);
+            _saveLoadService.SetInt(LevelNumberSaveKey, _levelNumber);
         }
 
         public void LoadCoinsCount()
         {
-            _coinsCount = _saveLoadService.LoadInt(CoinsCountSaveKey, DefaultCoinsCount);
+            _coinsCount = _saveLoadService.GetInt(CoinsCountSaveKey, DefaultCoinsCount);
         }
 
         public void SaveCoinsCount()
         {
-            _saveLoadService.SaveInt(CoinsCountSaveKey, _coinsCount);
+            _saveLoadService.SetInt(CoinsCountSaveKey, _coinsCount);
         }
 
         public void ClearProgress()

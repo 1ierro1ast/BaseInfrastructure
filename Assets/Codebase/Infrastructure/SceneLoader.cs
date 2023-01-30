@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Codebase.Core.UI.Counters;
+using System;
 using System.Collections;
-using Codebase.Core.UI.Counters;
+using UniRx;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,17 +9,9 @@ namespace Codebase.Infrastructure
 {
     public class SceneLoader
     {
-        private readonly ICoroutineRunner _coroutineRunner;
-
-        public SceneLoader(ICoroutineRunner coroutineRunner)
+        public void LoadScene(string name, bool validateSceneName = true, Action onLoaded = null, ProgressBar progressView = null)
         {
-            _coroutineRunner = coroutineRunner;
-        }
-
-        public void LoadScene(string name, bool validateSceneName = true, Action onLoaded = null,
-            ProgressBar progressView = null)
-        {
-            _coroutineRunner.StartCoroutine(LoadSceneCoroutine(name, validateSceneName, onLoaded, progressView));
+            MainThreadDispatcher.StartUpdateMicroCoroutine(LoadSceneCoroutine(name, validateSceneName, onLoaded, progressView));
         }
 
         private IEnumerator LoadSceneCoroutine(string name, bool validateSceneName, Action onLoaded = null,
@@ -33,15 +26,22 @@ namespace Codebase.Infrastructure
             AsyncOperation loadOperation = SceneManager.LoadSceneAsync(name);
 
             loadOperation.allowSceneActivation = false;
-            progressView?.SetProgress(loadOperation.progress);
+            SetProgress(progressView, loadOperation);
             loadOperation.allowSceneActivation = true;
+
             while (!loadOperation.isDone)
             {
-                progressView?.SetProgress(loadOperation.progress);
+                SetProgress(progressView, loadOperation);
                 yield return null;
             }
 
             onLoaded?.Invoke();
+        }
+
+        private void SetProgress(ProgressBar progressView, AsyncOperation loadOperation)
+        {
+            if (progressView != null)
+                progressView.SetProgress(loadOperation.progress);
         }
     }
 }

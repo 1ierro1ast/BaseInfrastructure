@@ -1,9 +1,10 @@
-﻿using System.Collections;
-using Codebase.Core.UI;
+﻿using Codebase.Core.UI;
 using Codebase.Core.UI.Popups;
 using Codebase.Infrastructure.Services.DataStorage;
 using Codebase.Infrastructure.Services.Factories;
 using Codebase.Infrastructure.StateMachine;
+using System.Collections;
+using UniRx;
 using UnityEngine;
 
 namespace Codebase.Infrastructure.GameFlow.States
@@ -14,22 +15,16 @@ namespace Codebase.Infrastructure.GameFlow.States
         private readonly IEventBus _eventBus;
         private readonly IUiFactory _uiFactory;
         private readonly ITemporaryLevelVariables _temporaryLevelVariables;
-        private readonly ICoroutineRunner _coroutineRunner;
-        private readonly LoadingCurtain _loadingCurtain;
 
         private OverlayPopup _overlayPopup;
 
-
         public GameplayState(GameStateMachine gameStateMachine, IEventBus eventBus,
-            IUiFactory uiFactory, ITemporaryLevelVariables temporaryLevelVariables,
-            ICoroutineRunner coroutineRunner, LoadingCurtain loadingCurtain)
+            IUiFactory uiFactory, ITemporaryLevelVariables temporaryLevelVariables)
         {
             _gameStateMachine = gameStateMachine;
             _eventBus = eventBus;
             _uiFactory = uiFactory;
             _temporaryLevelVariables = temporaryLevelVariables;
-            _coroutineRunner = coroutineRunner;
-            _loadingCurtain = loadingCurtain;
         }
 
         public void Exit()
@@ -53,13 +48,13 @@ namespace Codebase.Infrastructure.GameFlow.States
         private void EventBus_OnPlayerLoseEvent()
         {
             _eventBus.BroadcastLevelFinished();
-            _coroutineRunner.StartCoroutine(LoseCoroutine());
+            MainThreadDispatcher.StartUpdateMicroCoroutine(LoseCoroutine());
         }
 
         private void EventBus_OnPlayerWinEvent()
         {
             _eventBus.BroadcastLevelFinished();
-            _coroutineRunner.StartCoroutine(WinCoroutine());
+            MainThreadDispatcher.StartUpdateMicroCoroutine(WinCoroutine());
         }
 
         private void ToWinState()
@@ -76,13 +71,19 @@ namespace Codebase.Infrastructure.GameFlow.States
 
         private IEnumerator WinCoroutine()
         {
-            yield return new WaitForSeconds(0.7f);
+            var duration = .7f;
+            for (float t = 0f; t < duration; t += Time.deltaTime)
+                yield return null;
+
             ToWinState();
         }
 
         private IEnumerator LoseCoroutine()
         {
-            yield return new WaitForSeconds(0.7f);
+            var duration = .7f;
+            for (float t = 0f; t < duration; t += Time.deltaTime)
+                yield return null;
+
             ToLoseState();
         }
     }

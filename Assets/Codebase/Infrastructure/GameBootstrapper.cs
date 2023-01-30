@@ -6,15 +6,14 @@ using UnityEngine;
 
 namespace Codebase.Infrastructure
 {
-    public class GameBootstrapper : MonoBehaviour, ICoroutineRunner
+    public class GameBootstrapper : MonoBehaviour
     {
         public LoadingCurtain LoadingCurtain;
         public GameStateMachine StateMachine;
 
         private void Awake()
         {
-            StateMachine = new GameStateMachine(new SceneLoader(this), LoadingCurtain, AllServices.Container,
-                this);
+            StateMachine = new GameStateMachine(new SceneLoader(), LoadingCurtain, AllServices.Container);
             
             StateMachine.Enter<BootstrapState>();
 
