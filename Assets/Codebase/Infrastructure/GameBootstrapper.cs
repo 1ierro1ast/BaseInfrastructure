@@ -14,7 +14,7 @@ namespace Codebase.Infrastructure
         private void Awake()
         {
             StateMachine = new GameStateMachine(new SceneLoader(), LoadingCurtain, AllServices.Container);
-            
+
             StateMachine.Enter<BootstrapState>();
 
             DontDestroyOnLoad(LoadingCurtain);

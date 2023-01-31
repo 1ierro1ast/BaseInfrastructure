@@ -6,7 +6,7 @@
 
         public bool IsWin
         {
-            get => _isWin; 
+            get => _isWin;
             set => _isWin = value;
         }
 

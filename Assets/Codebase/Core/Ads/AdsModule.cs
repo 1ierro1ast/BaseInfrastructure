@@ -10,7 +10,6 @@ namespace Codebase.Core.Ads
         public bool InterstitialAdsIsReady => true;
         public bool NetworkIsEnable => Application.internetReachability == NetworkReachability.NotReachable;
 
-
         public AdsModule()
         {
             Initialize();

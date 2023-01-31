@@ -19,7 +19,6 @@ namespace Codebase.Core.UI.Counters
 
             _text.text = AbbrevationUtility.AbbreviateNumber(_gameVariables.CoinsCount);
         }
-        
 
         private void GameVariablesOnChangeCoinsCountEvent(int amount)
         {

@@ -1,6 +1,5 @@
 ﻿using Codebase.Core.UI.Popups;
 using Codebase.Infrastructure.Services.DataStorage;
-using Codebase.Infrastructure.Services.Factories;
 using Codebase.Infrastructure.StateMachine;
 using System.Collections;
 using UniRx;
@@ -17,7 +16,7 @@ namespace Codebase.Infrastructure.GameFlow.States
         private OverlayPopup _overlayPopup;
         private readonly CompositeDisposable _disposables = new();
 
-        public GameplayState(GameStateMachine gameStateMachine, CanvasService canvasService, 
+        public GameplayState(GameStateMachine gameStateMachine, CanvasService canvasService,
             ITemporaryLevelVariables temporaryLevelVariables)
         {
             _gameStateMachine = gameStateMachine;
@@ -33,9 +32,9 @@ namespace Codebase.Infrastructure.GameFlow.States
         public void Enter()
         {
             _temporaryLevelVariables.IsWin = false;
-            _overlayPopup = _overlayPopup != null ? 
+            _overlayPopup = _overlayPopup != null ?
                 _overlayPopup : _canvasService.GetPopup<OverlayPopup>();
-            
+
             _overlayPopup.OpenPopup();
 
             MessageBroker.Default

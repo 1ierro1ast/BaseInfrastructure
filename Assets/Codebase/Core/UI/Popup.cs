@@ -8,6 +8,7 @@ namespace Codebase.Core.UI
     {
         [Header("Open/Close Settings")]
         [SerializeField] private GameObject _body;
+
         [SerializeField] private bool _isOpen;
 
         [SerializeField] private BasePopupAnimation[] _popupAnimations;

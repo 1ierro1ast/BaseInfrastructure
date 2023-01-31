@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Codebase.Core.UI
 {
@@ -7,8 +6,8 @@ namespace Codebase.Core.UI
     [RequireComponent(typeof(Animation))]
     public class PopupAnimation : BasePopupAnimation
     {
-        [SerializeField] AnimationClip _openAnimation;
-        [SerializeField] AnimationClip _closeAnimation;
+        [SerializeField] private AnimationClip _openAnimation;
+        [SerializeField] private AnimationClip _closeAnimation;
         [SerializeField] private Animation _animation;
 
         private void OnValidate()

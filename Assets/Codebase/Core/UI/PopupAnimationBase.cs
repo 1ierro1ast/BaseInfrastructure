@@ -11,22 +11,18 @@ namespace Codebase.Core.UI
 
         protected virtual void OnInitialization()
         {
-
         }
 
         public virtual void Play(string animationName)
         {
-
         }
 
         public virtual void Play(int animationKey)
         {
-
         }
 
         public virtual void SetOpenFlag(bool flag)
         {
-
         }
     }
 }

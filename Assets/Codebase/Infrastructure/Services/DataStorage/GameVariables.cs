@@ -1,5 +1,5 @@
-﻿using System;
-using Codebase.Infrastructure.Services.SaveLoad;
+﻿using Codebase.Infrastructure.Services.SaveLoad;
+using System;
 
 namespace Codebase.Infrastructure.Services.DataStorage
 {
@@ -8,6 +8,7 @@ namespace Codebase.Infrastructure.Services.DataStorage
         private readonly IGetSetPrefsService _saveLoadService;
 
         public event Action<int> ChangeLevelNumberEvent;
+
         public event Action<int> ChangeCoinsCountEvent;
 
         private const string LevelNumberSaveKey = "LevelNumber";
@@ -27,13 +28,14 @@ namespace Codebase.Infrastructure.Services.DataStorage
                 if (value < 0) throw new ArgumentOutOfRangeException(nameof(value));
                 if (_levelNumber == value)
                     return;
-                
+
                 _levelNumber = value;
                 SaveLevelNumber();
-                
+
                 ChangeLevelNumberEvent?.Invoke(LevelNumber);
             }
         }
+
         public int CoinsCount
         {
             get => _coinsCount;
@@ -42,10 +44,10 @@ namespace Codebase.Infrastructure.Services.DataStorage
                 if (value < 0) throw new ArgumentOutOfRangeException(nameof(value));
                 if (_coinsCount == value)
                     return;
-                
+
                 _coinsCount = value;
                 SaveCoinsCount();
-                
+
                 ChangeCoinsCountEvent?.Invoke(CoinsCount);
             }
         }
@@ -67,12 +69,12 @@ namespace Codebase.Infrastructure.Services.DataStorage
         {
             CoinsCount += value;
         }
-        
+
         public bool TrySpendCoins(int value)
         {
-            if (value > CoinsCount) 
+            if (value > CoinsCount)
                 return false;
-            
+
             CoinsCount -= value;
             return true;
         }

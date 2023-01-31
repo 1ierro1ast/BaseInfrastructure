@@ -7,7 +7,7 @@ namespace Codebase.Infrastructure.StateMachine
     {
         protected Dictionary<Type, IExitableState> _states;
         protected IExitableState _activeState;
-        
+
         public void Enter<TState>() where TState : class, IState
         {
             var state = ChangeState<TState>();

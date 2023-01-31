@@ -24,7 +24,7 @@ namespace Codebase.Infrastructure.GameFlow
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingCurtain,
                     services.Single<ILevelFactory>(), services.Single<IGameVariables>()),
 
-                [typeof(GameplayState)] = new GameplayState(this, services.Single<CanvasService>(), 
+                [typeof(GameplayState)] = new GameplayState(this, services.Single<CanvasService>(),
                     services.Single<ITemporaryLevelVariables>()),
 
                 [typeof(WinState)] = new WinState(this, services.Single<CanvasService>(),
