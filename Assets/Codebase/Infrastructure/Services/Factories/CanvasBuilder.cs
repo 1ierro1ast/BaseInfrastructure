@@ -36,7 +36,8 @@ namespace Codebase.Infrastructure.Services.Factories
 
         public override CanvasBuilderBase BuildShopPopup()
         {
-            throw new System.NotImplementedException();
+            CreatePopup<ShopPopup>(UIPath.ShopPopup);
+            return this;
         }
 
         private void CreatePopup<T>(string path) where T : PopupBase

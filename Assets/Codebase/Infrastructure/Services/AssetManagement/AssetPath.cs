@@ -13,6 +13,7 @@
         public const string OverlayPopup = "UI/Popups/OverlayPopup";
         public const string WinPopup = "UI/Popups/WinPopup";
         public const string LosePopup = "UI/Popups/LosePopup";
+        public const string ShopPopup = "UI/Popups/ShopPopup";
         public const string MainCanvas = "UI/MainCanvas";
     }
 }
