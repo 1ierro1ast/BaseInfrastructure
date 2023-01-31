@@ -1,7 +1,7 @@
 ﻿namespace Codebase.Infrastructure.GameFlow
 {
-    public enum LevelStatusMessage
-    { Loaded, Started, Finished };
+    public enum CompleteMessage
+    { Win, Lose }
 
     public class GameCompleteMessage
     {

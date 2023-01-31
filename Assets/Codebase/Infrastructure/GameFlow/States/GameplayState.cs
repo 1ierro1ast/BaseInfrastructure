@@ -33,6 +33,7 @@ namespace Codebase.Infrastructure.GameFlow.States
         public void Enter()
         {
             _temporaryLevelVariables.IsWin = false;
+
             _overlayPopup = _overlayPopup != null ?
                 _overlayPopup : _canvasService.GetPopup<OverlayPopup>();
 

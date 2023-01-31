@@ -52,12 +52,11 @@ namespace Codebase.Infrastructure.GameFlow.States
 
         private void StartButtonClick()
         {
+            _startPopup.ClosePopup();
+
             Observable
                 .FromMicroCoroutine(Waiting)
-                .DoOnCompleted(_startPopup.ClosePopup)
-                .SelectMany(Waiting)
-                .DoOnCompleted(_gameStateMachine.Enter<GameplayState>)
-                .Subscribe();
+                .Subscribe(_ => _gameStateMachine.Enter<GameplayState>());
         }
 
         private IEnumerator Waiting()

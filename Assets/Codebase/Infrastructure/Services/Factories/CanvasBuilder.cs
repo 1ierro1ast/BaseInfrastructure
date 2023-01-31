@@ -1,5 +1,4 @@
-﻿using Codebase.Core.UI;
-using Codebase.Core.UI.Popups;
+﻿using Codebase.Core.UI.Popups;
 using Codebase.Infrastructure.Services.AssetManagement;
 
 namespace Codebase.Infrastructure.Services.Factories
@@ -8,31 +7,36 @@ namespace Codebase.Infrastructure.Services.Factories
     {
         public CanvasBuilder(IAssetProvider assetProvider) : base(assetProvider)
         {
-            CreateCanvas(AssetPath.MainCanvas);
+            CreateCanvas(UIPath.MainCanvas);
         }
 
         public override CanvasBuilderBase BuildStartPopup()
         {
-            CreatePopup<StartPopup>(AssetPath.StartPopup);
+            CreatePopup<StartPopup>(UIPath.StartPopup);
             return this;
         }
 
         public override CanvasBuilderBase BuildOverlayPopup()
         {
-            CreatePopup<OverlayPopup>(AssetPath.OverlayPopup);
+            CreatePopup<OverlayPopup>(UIPath.OverlayPopup);
             return this;
         }
 
         public override CanvasBuilderBase BuildLosePopup()
         {
-            CreatePopup<LosePopup>(AssetPath.LosePopup);
+            CreatePopup<LosePopup>(UIPath.LosePopup);
             return this;
         }
 
         public override CanvasBuilderBase BuildWinPopup()
         {
-            CreatePopup<WinPopup>(AssetPath.WinPopup);
+            CreatePopup<WinPopup>(UIPath.WinPopup);
             return this;
+        }
+
+        public override CanvasBuilderBase BuildShopPopup()
+        {
+            throw new System.NotImplementedException();
         }
 
         private void CreatePopup<T>(string path) where T : PopupBase
