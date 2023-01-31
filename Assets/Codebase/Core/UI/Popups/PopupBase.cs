@@ -2,7 +2,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Codebase.Core.UI
+namespace Codebase.Core.UI.Popups
 {
     public abstract class PopupBase : MonoBehaviour
     {

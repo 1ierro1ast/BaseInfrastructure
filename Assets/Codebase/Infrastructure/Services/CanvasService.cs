@@ -1,9 +1,9 @@
-using Codebase.Infrastructure.Services;
+using Codebase.Core.UI.Popups;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Codebase.Core.UI.Popups
+namespace Codebase.Infrastructure.Services
 {
     public class CanvasService : IService
     {
