@@ -49,13 +49,6 @@ namespace Codebase.Infrastructure.GameFlow.States
                 .Subscribe(_ => _loadingCurtain.ClosePopup());
         }
 
-        private IEnumerator Waiting()
-        {
-            var duration = .5f;
-            for (float t = 0f; t < duration; t += Time.deltaTime)
-                yield return null;
-        }
-
         private void StartButtonClick()
         {
             Observable
@@ -64,6 +57,13 @@ namespace Codebase.Infrastructure.GameFlow.States
                 .SelectMany(Waiting)
                 .DoOnCompleted(_gameStateMachine.Enter<GameplayState>)
                 .Subscribe();
+        }
+
+        private IEnumerator Waiting()
+        {
+            var duration = .5f;
+            for (float t = 0f; t < duration; t += Time.deltaTime)
+                yield return null;
         }
     }
 }

@@ -23,9 +23,7 @@ namespace Codebase.Core.UI.Popups
             popup.GetComponent<Canvas>().overrideSorting = true;
         }
 
-        public T GetPopup<T>() where T : PopupBase
-        {
-            return _popups.FirstOrDefault(p => p is T) as T;
-        }
+        public T GetPopup<T>() where T : PopupBase =>
+            _popups.FirstOrDefault(p => p is T) as T;
     }
 }

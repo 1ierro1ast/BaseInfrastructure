@@ -54,7 +54,7 @@ namespace Codebase.Infrastructure.GameFlow.States
             RegisterAdsModule();
             RegisterAnalyticsModule();
             RegisterTemporaryLevelVariables();
-            RegisterUiFactory();
+            RegisterCanvasService();
 
             RegisterLevelFactory();
         }
@@ -117,7 +117,7 @@ namespace Codebase.Infrastructure.GameFlow.States
             _services.RegisterSingle<ILevelFactory>(new LevelFactory(_services.Single<IAssetProvider>()));
         }
 
-        private void RegisterUiFactory()
+        private void RegisterCanvasService()
         {
             var assetProvider = _services.Single<IAssetProvider>();
             var builder = new CanvasBuilder(assetProvider);
