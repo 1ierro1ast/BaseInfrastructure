@@ -1,7 +1,6 @@
 ﻿using Codebase.Core.UI;
 using Codebase.Core.UI.Popups;
 using Codebase.Infrastructure.Services;
-using Codebase.Infrastructure.Services.Factories;
 using Codebase.Infrastructure.StateMachine;
 using System.Collections;
 using UniRx;
@@ -12,31 +11,33 @@ namespace Codebase.Infrastructure.GameFlow.States
     public class LoseState : IState
     {
         private readonly GameStateMachine _gameStateMachine;
-        private readonly IUiFactory _uiFactory;
+        private readonly CanvasService _canvasService;
         private readonly LoadingCurtain _loadingCurtain;
         private readonly ISceneService _sceneService;
-        private LosePopup _popup;
+        private LosePopup _losePopup;
 
-        public LoseState(GameStateMachine gameStateMachine, IUiFactory uiFactory,
+        public LoseState(GameStateMachine gameStateMachine, CanvasService canvasService,
             LoadingCurtain loadingCurtain, ISceneService sceneService)
         {
             _gameStateMachine = gameStateMachine;
-            _uiFactory = uiFactory;
+            _canvasService = canvasService;
             _loadingCurtain = loadingCurtain;
             _sceneService = sceneService;
         }
 
         public void Exit()
         {
-            _popup.OnRetryLevel -= RetryLevel;
-            _popup.ClosePopup();
+            _losePopup.OnRetryLevel -= RetryLevel;
+            _losePopup.ClosePopup();
         }
 
         public void Enter()
         {
-            _popup = _popup != null ? _popup : _uiFactory.GetLosePopup();
-            _popup.OnRetryLevel += RetryLevel;
-            _popup.OpenPopup();
+            _losePopup = _losePopup != null ?
+                _losePopup : _canvasService.GetPopup<LosePopup>();
+
+            _losePopup.OnRetryLevel += RetryLevel;
+            _losePopup.OpenPopup();
         }
 
         private void RetryLevel()

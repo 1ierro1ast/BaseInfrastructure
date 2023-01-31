@@ -1,4 +1,5 @@
 ﻿using Codebase.Core.UI;
+using Codebase.Core.UI.Popups;
 using Codebase.Infrastructure.GameFlow.States;
 using Codebase.Infrastructure.Services;
 using Codebase.Infrastructure.Services.DataStorage;
@@ -17,19 +18,19 @@ namespace Codebase.Infrastructure.GameFlow
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, services),
 
-                [typeof(GameReadyState)] = new GameReadyState(this, services.Single<IUiFactory>(),
+                [typeof(GameReadyState)] = new GameReadyState(this, services.Single<CanvasService>(),
                     services.Single<ITemporaryLevelVariables>(), loadingCurtain),
 
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingCurtain,
                     services.Single<ILevelFactory>(), services.Single<IGameVariables>()),
 
-                [typeof(GameplayState)] = new GameplayState(this, services.Single<IUiFactory>(), 
+                [typeof(GameplayState)] = new GameplayState(this, services.Single<CanvasService>(), 
                     services.Single<ITemporaryLevelVariables>()),
 
-                [typeof(WinState)] = new WinState(this, services.Single<IUiFactory>(),
+                [typeof(WinState)] = new WinState(this, services.Single<CanvasService>(),
                     services.Single<IGameVariables>(), loadingCurtain, services.Single<ISceneService>()),
 
-                [typeof(LoseState)] = new LoseState(this, services.Single<IUiFactory>(), loadingCurtain,
+                [typeof(LoseState)] = new LoseState(this, services.Single<CanvasService>(), loadingCurtain,
                 services.Single<ISceneService>())
             };
         }

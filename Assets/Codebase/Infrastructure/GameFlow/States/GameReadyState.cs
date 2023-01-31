@@ -1,7 +1,6 @@
 ﻿using Codebase.Core.UI;
 using Codebase.Core.UI.Popups;
 using Codebase.Infrastructure.Services.DataStorage;
-using Codebase.Infrastructure.Services.Factories;
 using Codebase.Infrastructure.StateMachine;
 using System.Collections;
 using UniRx;
@@ -11,17 +10,17 @@ namespace Codebase.Infrastructure.GameFlow.States
 {
     public class GameReadyState : IState
     {
-        private readonly IUiFactory _uiFactory;
         private readonly GameStateMachine _gameStateMachine;
+        private readonly CanvasService _canvasService;
         private readonly ITemporaryLevelVariables _temporaryLevelVariables;
         private readonly LoadingCurtain _loadingCurtain;
         private StartPopup _startPopup;
 
-        public GameReadyState(GameStateMachine gameStateMachine, IUiFactory uiFactory,
+        public GameReadyState(GameStateMachine gameStateMachine, CanvasService canvasService,
             ITemporaryLevelVariables temporaryLevelVariables, LoadingCurtain loadingCurtain)
         {
-            _uiFactory = uiFactory;
             _gameStateMachine = gameStateMachine;
+            _canvasService = canvasService;
             _temporaryLevelVariables = temporaryLevelVariables;
             _loadingCurtain = loadingCurtain;
         }
@@ -36,42 +35,35 @@ namespace Codebase.Infrastructure.GameFlow.States
             _loadingCurtain.OpenPopup();
             _temporaryLevelVariables.ClearData();
 
-            _startPopup = _uiFactory.GetStartPopup();
+            _startPopup = _startPopup != null ?
+                _startPopup : _canvasService.GetPopup<StartPopup>();
+
             _startPopup.OpenPopup();
             _startPopup.OnStartButtonClick += StartButtonClick;
 
             MessageBroker.Default
                 .Publish(new GameStatusMessage(LevelStatusMessage.Loaded));
 
-            MainThreadDispatcher.StartUpdateMicroCoroutine(CloseCurtainCoroutine());
+            Observable
+                .FromMicroCoroutine(Waiting)
+                .Subscribe(_ => _loadingCurtain.ClosePopup());
         }
 
-        private IEnumerator CloseCurtainCoroutine()
+        private IEnumerator Waiting()
         {
             var duration = .5f;
             for (float t = 0f; t < duration; t += Time.deltaTime)
                 yield return null;
-
-            _loadingCurtain.ClosePopup();
         }
 
         private void StartButtonClick()
         {
-            MainThreadDispatcher.StartUpdateMicroCoroutine(GoToGameCoroutine());
-        }
-
-        private IEnumerator GoToGameCoroutine()
-        {
-            var duration = .5f;
-            for (float t = 0f; t < duration; t += Time.deltaTime)
-                yield return null;
-
-            _startPopup.ClosePopup();
-
-            for (float t = 0f; t < duration; t += Time.deltaTime)
-                yield return null;
-
-            _gameStateMachine.Enter<GameplayState>();
+            Observable
+                .FromMicroCoroutine(Waiting)
+                .DoOnCompleted(_startPopup.ClosePopup)
+                .SelectMany(Waiting)
+                .DoOnCompleted(_gameStateMachine.Enter<GameplayState>)
+                .Subscribe();
         }
     }
 }

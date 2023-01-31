@@ -2,7 +2,6 @@
 using Codebase.Core.UI.Popups;
 using Codebase.Infrastructure.Services;
 using Codebase.Infrastructure.Services.DataStorage;
-using Codebase.Infrastructure.Services.Factories;
 using Codebase.Infrastructure.StateMachine;
 using System.Collections;
 using UniRx;
@@ -13,17 +12,17 @@ namespace Codebase.Infrastructure.GameFlow.States
     public class WinState : IState
     {
         private readonly GameStateMachine _gameStateMachine;
-        private readonly IUiFactory _uiFactory;
+        private readonly CanvasService _canvasService;
         private readonly IGameVariables _gameVariables;
         private readonly LoadingCurtain _loadingCurtain;
         private readonly ISceneService _sceneService;
-        private WinPopup _popup;
+        private WinPopup _winPopup;
 
-        public WinState(GameStateMachine gameStateMachine, IUiFactory uiFactory, IGameVariables gameVariables,
+        public WinState(GameStateMachine gameStateMachine, CanvasService canvasService, IGameVariables gameVariables,
             LoadingCurtain loadingCurtain, ISceneService sceneService)
         {
             _gameStateMachine = gameStateMachine;
-            _uiFactory = uiFactory;
+            _canvasService = canvasService;
             _gameVariables = gameVariables;
             _loadingCurtain = loadingCurtain;
             _sceneService = sceneService;
@@ -31,15 +30,17 @@ namespace Codebase.Infrastructure.GameFlow.States
 
         public void Exit()
         {
-            _popup.ClosePopup();
-            _popup.OnNextLevel -= NextLevel;
+            _winPopup.ClosePopup();
+            _winPopup.OnNextLevel -= NextLevel;
         }
 
         public void Enter()
         {
-            _popup = _uiFactory.GetWinPopup();
-            _popup.OpenPopup();
-            _popup.OnNextLevel += NextLevel;
+            _winPopup = _winPopup != null ?
+                _winPopup : _canvasService.GetPopup<WinPopup>();
+
+            _winPopup.OpenPopup();
+            _winPopup.OnNextLevel += NextLevel;
         }
 
         private void NextLevel()

@@ -11,17 +11,17 @@ namespace Codebase.Infrastructure.GameFlow.States
     public class GameplayState : IState
     {
         private readonly GameStateMachine _gameStateMachine;
-        private readonly IUiFactory _uiFactory;
+        private readonly CanvasService _canvasService;
         private readonly ITemporaryLevelVariables _temporaryLevelVariables;
 
         private OverlayPopup _overlayPopup;
         private readonly CompositeDisposable _disposables = new();
 
-        public GameplayState(GameStateMachine gameStateMachine,
-            IUiFactory uiFactory, ITemporaryLevelVariables temporaryLevelVariables)
+        public GameplayState(GameStateMachine gameStateMachine, CanvasService canvasService, 
+            ITemporaryLevelVariables temporaryLevelVariables)
         {
             _gameStateMachine = gameStateMachine;
-            _uiFactory = uiFactory;
+            _canvasService = canvasService;
             _temporaryLevelVariables = temporaryLevelVariables;
         }
 
@@ -33,7 +33,9 @@ namespace Codebase.Infrastructure.GameFlow.States
         public void Enter()
         {
             _temporaryLevelVariables.IsWin = false;
-            _overlayPopup = _uiFactory.GetOverlayPopup();
+            _overlayPopup = _overlayPopup != null ? 
+                _overlayPopup : _canvasService.GetPopup<OverlayPopup>();
+            
             _overlayPopup.OpenPopup();
 
             MessageBroker.Default
