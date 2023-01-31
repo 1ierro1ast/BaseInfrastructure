@@ -16,7 +16,7 @@ Base scalable and flexible infrastructure for projects on Unity.
 
 ## Installation
 
-Just download last release [Here](https://github.com/1ierro1ast/BaseInfrastructure/releases) and import package in your project!
+Just download last release [original](https://github.com/1ierro1ast/BaseInfrastructure/releases) or [my](https://github.com/sidelamp/BaseInfrastructure/releases) and import package in your project!
 
 ## License
 
