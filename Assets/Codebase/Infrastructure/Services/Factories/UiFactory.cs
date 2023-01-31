@@ -7,7 +7,7 @@ namespace Codebase.Infrastructure.Services.Factories
 {
     public class UiFactory : IUiFactory
     {
-        private IAssetProvider _assetProvider;
+        private readonly IAssetProvider _assetProvider;
 
         private StartPopup _startPopup;
         private OverlayPopup _overlayPopup;
@@ -77,7 +77,7 @@ namespace Codebase.Infrastructure.Services.Factories
             return _losePopup;
         }
 
-        private void AddToMainCanvas(Popup popup)
+        private void AddToMainCanvas(PopupBase popup)
         {
             popup.transform.SetParent(_mainCanvas.transform);
             popup.GetComponent<Canvas>().overrideSorting = true;

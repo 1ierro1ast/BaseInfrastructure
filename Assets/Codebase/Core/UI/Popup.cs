@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Codebase.Core.UI
 {
-    public abstract class Popup : MonoBehaviour
+    public abstract class PopupBase : MonoBehaviour
     {
         [Header("Open/Close Settings")]
         [SerializeField] private GameObject _body;

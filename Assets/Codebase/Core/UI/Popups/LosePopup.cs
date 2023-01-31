@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Codebase.Core.UI.Popups
 {
-    public class LosePopup : Popup
+    public class LosePopup : PopupBase
     {
         [SerializeField] private Button _retryButton;
 

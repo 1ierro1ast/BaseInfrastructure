@@ -1,5 +1,6 @@
 ﻿using Codebase.Core.Ads;
 using Codebase.Core.Analytics;
+using Codebase.Core.UI.Popups;
 using Codebase.Infrastructure.Services;
 using Codebase.Infrastructure.Services.AssetManagement;
 using Codebase.Infrastructure.Services.DataStorage;
@@ -7,6 +8,7 @@ using Codebase.Infrastructure.Services.Factories;
 using Codebase.Infrastructure.Services.SaveLoad;
 using Codebase.Infrastructure.Services.Settings;
 using Codebase.Infrastructure.StateMachine;
+using UnityEngine;
 
 namespace Codebase.Infrastructure.GameFlow.States
 {
@@ -61,6 +63,7 @@ namespace Codebase.Infrastructure.GameFlow.States
         {
             GameSettings gameSettings = _services.Single<IAssetProvider>()
                 .GetScriptableObject<GameSettings>(AssetPath.GameSettings);
+            
             _services.RegisterSingle(gameSettings);
         }
 
@@ -116,8 +119,18 @@ namespace Codebase.Infrastructure.GameFlow.States
 
         private void RegisterUiFactory()
         {
-            _services.RegisterSingle<IUiFactory>(
-                new UiFactory(_services.Single<IAssetProvider>()));
+            var assetProvider = _services.Single<IAssetProvider>();
+            var builder = new CanvasBuilder(assetProvider);
+            
+            builder
+                .BuildStartPopup()
+                .BuildOverlayPopup()
+                .BuildWinPopup()
+                .BuildLosePopup();
+
+            var canvas = builder.MainCanvas;
+
+            _services.RegisterSingle(canvas);
         }
     }
 }

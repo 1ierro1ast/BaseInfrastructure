@@ -3,7 +3,7 @@ using UniRx;
 
 namespace Codebase.Core.UI.Popups
 {
-    public class OverlayPopup : Popup
+    public class OverlayPopup : PopupBase
     {
         protected override void OnInitialization()
         {

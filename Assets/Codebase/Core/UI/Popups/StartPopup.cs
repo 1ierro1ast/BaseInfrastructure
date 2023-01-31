@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Codebase.Core.UI.Popups
 {
-    public class StartPopup : Popup
+    public class StartPopup : PopupBase
     {
         public event Action OnStartButtonClick;
 

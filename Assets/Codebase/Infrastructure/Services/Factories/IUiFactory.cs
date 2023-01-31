@@ -1,4 +1,5 @@
-﻿using Codebase.Core.UI.Popups;
+﻿using Codebase.Core.UI;
+using Codebase.Core.UI.Popups;
 
 namespace Codebase.Infrastructure.Services.Factories
 {
@@ -8,5 +9,6 @@ namespace Codebase.Infrastructure.Services.Factories
         OverlayPopup GetOverlayPopup();
         WinPopup GetWinPopup();
         LosePopup GetLosePopup();
+
     }
 }
