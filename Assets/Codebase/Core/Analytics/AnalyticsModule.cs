@@ -10,40 +10,28 @@ namespace Codebase.Core.Analytics
     public class AnalyticsModule : IAnalyticsModule
     {
         private readonly IGameVariables _gameVariables;
-        private readonly IEventBus _eventBus;
-        private readonly ISceneService _sceneService;
         private DateTime _startTime;
         private DateTime _finishTime;
         private const string ModuleTag = "[AnalyticsModule]: ";
 
-        public AnalyticsModule(IGameVariables gameVariables, IEventBus eventBus, ISceneService sceneService)
+        public AnalyticsModule(IGameVariables gameVariables)
         {
             _gameVariables = gameVariables;
-            _eventBus = eventBus;
-            _sceneService = sceneService;
 
             MessageBroker.Default
-                .Receive<GameLevelMessage>()
-                .Where(msg => msg.Message == LevelMessage.Started)
-                .Subscribe(_ => GamePlayStart());
+                .Receive<GameStatusMessage>()
+                .Where(msg => msg.Message == LevelStatusMessage.Started)
+                .Subscribe(_ => LevelStart());
 
-            _eventBus.OnPlayerWinEvent += EventBus_OnPlayerWinEvent;
-            _eventBus.OnPlayerLoseEvent += EventBus_OnPlayerLoseEvent;
+            MessageBroker.Default
+                .Receive<GameCompleteMessage>()
+                .Subscribe(msg => CompliteStatus(msg.Message));
         }
 
-        private void GamePlayStart()
+        private void CompliteStatus(CompleteMessage message)
         {
-            LevelStart();
-        }
-
-        private void EventBus_OnPlayerWinEvent()
-        {
-            LevelFinish(true);
-        }
-
-        private void EventBus_OnPlayerLoseEvent()
-        {
-            LevelFinish(false);
+            var isWin = message == CompleteMessage.Win;
+            LevelFinish(isWin);
         }
 
         private void LevelStart()

@@ -1,29 +1,24 @@
 using Codebase.Infrastructure.GameFlow;
-using Codebase.Infrastructure.Services;
+using UniRx;
 
 namespace Codebase.Core.UI.Popups
 {
     public class OverlayPopup : Popup
     {
-        private IEventBus _eventBus;
         protected override void OnInitialization()
         {
             base.OnInitialization();
 
-            _eventBus = AllServices.Container.Single<IEventBus>();
-            
-            _eventBus.LevelFinishedEvent += EventBusOnLevelFinishedEvent;
+            MessageBroker.Default
+                .Receive<GameStatusMessage>()
+                .Where(msg => msg.Message == LevelStatusMessage.Finished)
+                .Subscribe(_ => LevelFinished())
+                .AddTo(this);
         }
 
-        private void EventBusOnLevelFinishedEvent()
+        private void LevelFinished()
         {
-            _eventBus.LevelFinishedEvent -= EventBusOnLevelFinishedEvent;
             ClosePopup();
-        }
-
-        private void OnDestroy()
-        {
-            _eventBus.LevelFinishedEvent -= EventBusOnLevelFinishedEvent;
         }
     }
 }

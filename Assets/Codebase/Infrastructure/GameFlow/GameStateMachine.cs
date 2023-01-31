@@ -23,8 +23,8 @@ namespace Codebase.Infrastructure.GameFlow
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingCurtain,
                     services.Single<ILevelFactory>(), services.Single<IGameVariables>()),
 
-                [typeof(GameplayState)] = new GameplayState(this, services.Single<IEventBus>(),
-                    services.Single<IUiFactory>(), services.Single<ITemporaryLevelVariables>()),
+                [typeof(GameplayState)] = new GameplayState(this, services.Single<IUiFactory>(), 
+                    services.Single<ITemporaryLevelVariables>()),
 
                 [typeof(WinState)] = new WinState(this, services.Single<IUiFactory>(),
                     services.Single<IGameVariables>(), loadingCurtain, services.Single<ISceneService>()),

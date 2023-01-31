@@ -41,7 +41,7 @@ namespace Codebase.Infrastructure.GameFlow.States
             _startPopup.OnStartButtonClick += StartButtonClick;
 
             MessageBroker.Default
-                .Publish(new GameLevelMessage(LevelMessage.Loaded));
+                .Publish(new GameStatusMessage(LevelStatusMessage.Loaded));
 
             MainThreadDispatcher.StartUpdateMicroCoroutine(CloseCurtainCoroutine());
         }

@@ -49,7 +49,6 @@ namespace Codebase.Infrastructure.GameFlow.States
             RegisterSceneService();
 
             RegisterGameVariables();
-            RegisterEventBus();
             RegisterAdsModule();
             RegisterAnalyticsModule();
             RegisterTemporaryLevelVariables();
@@ -80,8 +79,7 @@ namespace Codebase.Infrastructure.GameFlow.States
         private void RegisterAnalyticsModule()
         {
             _services.RegisterSingle<IAnalyticsModule>(
-                new AnalyticsModule(_services.Single<IGameVariables>(), _services.Single<IEventBus>(),
-                _services.Single<ISceneService>()));
+                new AnalyticsModule(_services.Single<IGameVariables>()));
         }
 
         private void RegisterTemporaryLevelVariables()
@@ -114,12 +112,6 @@ namespace Codebase.Infrastructure.GameFlow.States
         private void RegisterLevelFactory()
         {
             _services.RegisterSingle<ILevelFactory>(new LevelFactory(_services.Single<IAssetProvider>()));
-        }
-
-        private void RegisterEventBus()
-        {
-            _services.RegisterSingle<IEventBus>(
-                new EventBus());
         }
 
         private void RegisterUiFactory()

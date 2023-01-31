@@ -1,5 +1,5 @@
 ﻿using Codebase.Infrastructure.GameFlow;
-using Codebase.Infrastructure.Services;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,12 +9,10 @@ namespace Codebase.Core.DemoGameplay
     {
         [SerializeField] private TriggerType _triggerType;
         private Button _button;
-        private IEventBus _eventBus;
 
         private void Awake()
         {
             _button = GetComponent<Button>();
-            _eventBus = AllServices.Container.Single<IEventBus>();
             _button?.onClick.AddListener(OnButtonClick);
         }
 
@@ -23,10 +21,13 @@ namespace Codebase.Core.DemoGameplay
             switch (_triggerType)
             {
                 case TriggerType.Win:
-                    _eventBus.BroadcastPlayerWin();
+                    MessageBroker.Default
+                        .Publish(new GameCompleteMessage(CompleteMessage.Win));
                     break;
+
                 case TriggerType.Lose:
-                    _eventBus.BroadcastPlayerLose();
+                    MessageBroker.Default
+                        .Publish(new GameCompleteMessage(CompleteMessage.Lose));
                     break;
             }
 
@@ -38,5 +39,5 @@ namespace Codebase.Core.DemoGameplay
     {
         Win,
         Lose
-    } 
+    }
 }

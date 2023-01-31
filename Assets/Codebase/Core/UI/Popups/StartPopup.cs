@@ -23,8 +23,8 @@ namespace Codebase.Core.UI.Popups
                 .AddTo(this);
 
             MessageBroker.Default
-                .Receive<GameLevelMessage>()
-                .Where(msg => msg.Message == LevelMessage.Started)
+                .Receive<GameStatusMessage>()
+                .Where(msg => msg.Message == LevelStatusMessage.Started)
                 .Subscribe(_ => GamePlayStart())
                 .AddTo(this);
         }

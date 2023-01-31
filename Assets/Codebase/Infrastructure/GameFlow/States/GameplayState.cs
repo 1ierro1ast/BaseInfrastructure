@@ -11,25 +11,23 @@ namespace Codebase.Infrastructure.GameFlow.States
     public class GameplayState : IState
     {
         private readonly GameStateMachine _gameStateMachine;
-        private readonly IEventBus _eventBus;
         private readonly IUiFactory _uiFactory;
         private readonly ITemporaryLevelVariables _temporaryLevelVariables;
 
         private OverlayPopup _overlayPopup;
+        private readonly CompositeDisposable _disposables = new();
 
-        public GameplayState(GameStateMachine gameStateMachine, IEventBus eventBus,
+        public GameplayState(GameStateMachine gameStateMachine,
             IUiFactory uiFactory, ITemporaryLevelVariables temporaryLevelVariables)
         {
             _gameStateMachine = gameStateMachine;
-            _eventBus = eventBus;
             _uiFactory = uiFactory;
             _temporaryLevelVariables = temporaryLevelVariables;
         }
 
         public void Exit()
         {
-            _eventBus.OnPlayerWinEvent -= PlayerWinEvent;
-            _eventBus.OnPlayerLoseEvent -= PlayerLoseEvent;
+            _disposables.Clear();
         }
 
         public void Enter()
@@ -39,52 +37,41 @@ namespace Codebase.Infrastructure.GameFlow.States
             _overlayPopup.OpenPopup();
 
             MessageBroker.Default
-                .Publish(new GameLevelMessage(LevelMessage.Started));
+                .Publish(new GameStatusMessage(LevelStatusMessage.Started));
 
-            _eventBus.OnPlayerWinEvent += PlayerWinEvent;
-            _eventBus.OnPlayerLoseEvent += PlayerLoseEvent;
+            MessageBroker.Default
+                .Receive<GameCompleteMessage>()
+                .Subscribe(msg => CompliteLevelStatus(msg.Message))
+                .AddTo(_disposables);
         }
 
-        private void PlayerLoseEvent()
+        private void CompliteLevelStatus(CompleteMessage message)
         {
-            _eventBus.BroadcastLevelFinished();
-            MainThreadDispatcher.StartUpdateMicroCoroutine(LoseCoroutine());
+            var isWin = message == CompleteMessage.Win;
+
+            MessageBroker.Default
+                .Publish(new GameStatusMessage(LevelStatusMessage.Finished));
+
+            Observable
+                .FromMicroCoroutine(WaitCoroutine)
+                .Subscribe(_ => SetState(isWin));
         }
 
-        private void PlayerWinEvent()
+        private void SetState(bool isWin)
         {
-            _eventBus.BroadcastLevelFinished();
-            MainThreadDispatcher.StartUpdateMicroCoroutine(WinCoroutine());
+            _temporaryLevelVariables.IsWin = isWin;
+
+            if (isWin)
+                _gameStateMachine.Enter<WinState>();
+            else
+                _gameStateMachine.Enter<LoseState>();
         }
 
-        private void ToWinState()
-        {
-            _temporaryLevelVariables.IsWin = true;
-            _gameStateMachine.Enter<WinState>();
-        }
-
-        private void ToLoseState()
-        {
-            _temporaryLevelVariables.IsWin = false;
-            _gameStateMachine.Enter<LoseState>();
-        }
-
-        private IEnumerator WinCoroutine()
-        {
-            var duration = .7f;
-            for (float t = 0f; t < duration; t += Time.deltaTime)
-                yield return null;
-
-            ToWinState();
-        }
-
-        private IEnumerator LoseCoroutine()
+        private IEnumerator WaitCoroutine()
         {
             var duration = .7f;
             for (float t = 0f; t < duration; t += Time.deltaTime)
                 yield return null;
-
-            ToLoseState();
         }
     }
 }
