@@ -11,7 +11,6 @@ Base scalable and flexible infrastructure for projects on Unity.
 - Loading curtain screen
 - Service for save and load data
 - Service for analytics integration (only start and finish events) 
-- Event bus for comfortable game controlling
 - No third-party dependencies
 
 ## Installation
