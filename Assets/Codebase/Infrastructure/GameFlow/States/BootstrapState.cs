@@ -118,13 +118,14 @@ namespace Codebase.Infrastructure.GameFlow.States
         private void RegisterCanvasService()
         {
             var assetProvider = _services.Single<IAssetProvider>();
-            var builder = new CanvasBuilder(assetProvider);
+            var builder = new CanvasBuilderWithoutShop(assetProvider);
 
             builder
                 .BuildStartPopup()
                 .BuildOverlayPopup()
                 .BuildWinPopup()
-                .BuildLosePopup();
+                .BuildLosePopup()
+                .BuildShopPopup();
 
             var canvas = builder.MainCanvas;
 

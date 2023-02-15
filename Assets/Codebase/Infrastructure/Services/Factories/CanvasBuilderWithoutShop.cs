@@ -3,9 +3,9 @@ using Codebase.Infrastructure.Services.AssetManagement;
 
 namespace Codebase.Infrastructure.Services.Factories
 {
-    public class CanvasBuilder : CanvasBuilderBase
+    public class CanvasBuilderWithoutShop : CanvasBuilderBase
     {
-        public CanvasBuilder(IAssetProvider assetProvider) : base(assetProvider)
+        public CanvasBuilderWithoutShop(IAssetProvider assetProvider) : base(assetProvider)
         {
             CreateCanvas(UIPath.MainCanvas);
         }
@@ -36,7 +36,7 @@ namespace Codebase.Infrastructure.Services.Factories
 
         public override CanvasBuilderBase BuildShopPopup()
         {
-            CreatePopup<ShopPopup>(UIPath.ShopPopup);
+            //CreatePopup<ShopPopup>(UIPath.ShopPopup);
             return this;
         }
 
