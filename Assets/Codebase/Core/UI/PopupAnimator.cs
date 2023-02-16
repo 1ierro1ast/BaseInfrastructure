@@ -14,7 +14,6 @@ namespace Codebase.Core.UI
         private void Awake()
         {
             _animationProvider = GetComponent<BaseAnimationProvider>();
-
             if (_animationProvider == null)
             {
                 throw new Exception($"AnimationProvider not exists on {gameObject.name}");
@@ -23,6 +22,8 @@ namespace Codebase.Core.UI
 
         public void SetOpenFlag(bool flag)
         {
+            if (_animationProvider == null) _animationProvider = GetComponent<BaseAnimationProvider>();
+
             if (flag)
                 _animationProvider.Play(_openAnimationName);
             else

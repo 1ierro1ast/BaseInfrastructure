@@ -196,6 +196,7 @@ MonoBehaviour:
   - {fileID: 2287541000690885538}
   _closePopupButton: {fileID: 0}
   _secondClosePopupButton: {fileID: 0}
+  _isOpen: 0
   _retryButton: {fileID: 5665144326090819518}
 --- !u!111 &8944613227107956874
 Animation:
@@ -228,6 +229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _openAnimationName: OpenFade
   _closeAnimationName: CloseFade
+  _animationProvider: {fileID: 3536178190346674686}
 --- !u!114 &3536178190346674686
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -565,6 +565,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _openAnimationName: OpenFade
   _closeAnimationName: CloseFade
+  _animationProvider: {fileID: 7382133555248790525}
 --- !u!114 &7382133555248790525
 MonoBehaviour:
   m_ObjectHideFlags: 0

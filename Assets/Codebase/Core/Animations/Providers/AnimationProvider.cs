@@ -14,6 +14,7 @@ namespace Codebase.Core.Animations.Providers
 
         public override void Play(string name)
         {
+            if(_animation == null) _animation = GetComponent<Animation>();
             _animation.Play(name);
         }
     }

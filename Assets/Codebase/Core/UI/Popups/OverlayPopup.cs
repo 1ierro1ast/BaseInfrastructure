@@ -1,4 +1,5 @@
-using Codebase.Infrastructure.GameFlow;
+using Codebase.Infrastructure.GameFlow.EventBusSystem;
+using Codebase.Infrastructure.GameFlow.Events;
 using Codebase.Infrastructure.Services;
 
 namespace Codebase.Core.UI.Popups
@@ -12,18 +13,18 @@ namespace Codebase.Core.UI.Popups
 
             _eventBus = AllServices.Container.Single<IEventBus>();
             
-            _eventBus.LevelFinishedEvent += EventBusOnLevelFinishedEvent;
+            _eventBus.Subscribe<LevelFinished>(OnLevelFinished);
         }
 
-        private void EventBusOnLevelFinishedEvent()
+        private void OnLevelFinished()
         {
-            _eventBus.LevelFinishedEvent -= EventBusOnLevelFinishedEvent;
+            _eventBus.Unsubscribe<LevelFinished>(OnLevelFinished);
             ClosePopup();
         }
 
         private void OnDestroy()
         {
-            _eventBus.LevelFinishedEvent -= EventBusOnLevelFinishedEvent;
+            _eventBus.Unsubscribe<LevelFinished>(OnLevelFinished);
         }
     }
 }

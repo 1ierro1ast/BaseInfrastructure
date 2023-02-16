@@ -242,6 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _openAnimationName: OpenFade
   _closeAnimationName: CloseFade
+  _animationProvider: {fileID: 4820365117251237279}
 --- !u!1 &7498434506155886439
 GameObject:
   m_ObjectHideFlags: 0

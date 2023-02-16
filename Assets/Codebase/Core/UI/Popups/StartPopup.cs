@@ -1,5 +1,6 @@
 using System;
-using Codebase.Infrastructure.GameFlow;
+using Codebase.Infrastructure.GameFlow.EventBusSystem;
+using Codebase.Infrastructure.GameFlow.Events;
 using Codebase.Infrastructure.Services;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,15 +20,15 @@ namespace Codebase.Core.UI.Popups
             _startButton.onClick.AddListener(OnStartButtonClick);
             _eventBus = AllServices.Container.Single<IEventBus>();
             
-            _eventBus.GamePlayStartEvent += EventBus_OnGamePlayStart;
+            _eventBus.Subscribe<GameplayStarted>(OnGameplayStarted);
         }
 
         private void OnDestroy()
         {
-            _eventBus.GamePlayStartEvent -= EventBus_OnGamePlayStart;
+            _eventBus.Unsubscribe<GameplayStarted>(OnGameplayStarted);
         }
 
-        private void EventBus_OnGamePlayStart()
+        private void OnGameplayStarted()
         {
             Debug.Log("Game play start");
         }
