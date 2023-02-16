@@ -18,6 +18,15 @@ Base scalable and flexible infrastructure for projects on Unity.
 
 Just download last release [Here](https://github.com/1ierro1ast/BaseInfrastructure/releases) and import package in your project!
 
+## Modules
+
+- [Input service](https://github.com/1ierro1ast/InputServiceModule)
+- [Base player controllers](https://github.com/1ierro1ast/BasePlayerControllers)
+- [Obstacles module](https://github.com/1ierro1ast/ObstaclesModule)
+- [Skin service](https://github.com/1ierro1ast/SkinServiceModule)
+
+<span style="color:green"> If you want to add your own module just send me pull request with updated README.md </span>
+
 ## License
 
 MIT
