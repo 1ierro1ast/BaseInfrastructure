@@ -77,10 +77,10 @@ namespace Codebase.Infrastructure.Services.Factories
             return _losePopup;
         }
 
-        private void AddToMainCanvas(Popup popup)
+        private void AddToMainCanvas(BasePopup basePopup)
         {
-            popup.transform.SetParent(_mainCanvas.transform);
-            popup.GetComponent<Canvas>().overrideSorting = true;
+            basePopup.transform.SetParent(_mainCanvas.transform);
+            basePopup.GetComponent<Canvas>().overrideSorting = true;
         }
     }
 }

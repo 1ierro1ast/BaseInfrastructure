@@ -2,7 +2,7 @@
 {
     public static partial class AssetPath
     {
-        public const string LevelsPath = "Levels";
+        public const string LevelsListsPath = "Levels/LevelsLists";
         public const string GameSettingsPath = "Settings/GameSettings";
         public const string StartPopupPath = "UI/Popups/StartPopup";
         public const string OverlayPopupPath = "UI/Popups/OverlayPopup";
