@@ -423,8 +423,9 @@ GameObject:
   - component: {fileID: 1619939287498844424}
   - component: {fileID: 1619939287498844425}
   - component: {fileID: 3589506765956034736}
-  - component: {fileID: 4437451963242942564}
   - component: {fileID: 3979956772334384431}
+  - component: {fileID: 564879234823631125}
+  - component: {fileID: 7382133555248790525}
   m_Layer: 5
   m_Name: WinPopup
   m_TagString: Untagged
@@ -527,26 +528,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _body: {fileID: 1619939286444998355}
-  _popupAnimations:
-  - {fileID: 4437451963242942564}
+  _popupAnimators:
+  - {fileID: 564879234823631125}
   _closePopupButton: {fileID: 0}
   _secondClosePopupButton: {fileID: 0}
+  _isOpen: 0
   _nextButton: {fileID: 1619939287472280846}
---- !u!114 &4437451963242942564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1619939287498844428}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2fe260b4786adb4f8a0071f8b5c1691, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _openAnimation: {fileID: 7400000, guid: 6e87b5d1a8fb96b488c05f231e846978, type: 2}
-  _closeAnimation: {fileID: 7400000, guid: 850db300f0fa0cc40a36d4b0b040f902, type: 2}
-  _animation: {fileID: 3979956772334384431}
 --- !u!111 &3979956772334384431
 Animation:
   m_ObjectHideFlags: 0
@@ -564,6 +551,32 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &564879234823631125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1619939287498844428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af5fb0f3fc9e45cfbd1817591eefa518, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _openAnimationName: OpenFade
+  _closeAnimationName: CloseFade
+--- !u!114 &7382133555248790525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1619939287498844428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 291e4e644cd04eb7b8e274c938925710, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4110184663266935375
 GameObject:
   m_ObjectHideFlags: 0

@@ -89,8 +89,9 @@ GameObject:
   - component: {fileID: 7498434504476406178}
   - component: {fileID: 7498434504476406179}
   - component: {fileID: 7498434504476406176}
-  - component: {fileID: 1004541687372301180}
   - component: {fileID: 786975631}
+  - component: {fileID: 4820365117251237279}
+  - component: {fileID: 305654393578771898}
   m_Layer: 5
   m_Name: LoadingCurtain
   m_TagString: Untagged
@@ -193,25 +194,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _body: {fileID: 7498434506155886439}
-  _popupAnimations:
-  - {fileID: 1004541687372301180}
+  _popupAnimators:
+  - {fileID: 305654393578771898}
   _closePopupButton: {fileID: 0}
   _secondClosePopupButton: {fileID: 0}
---- !u!114 &1004541687372301180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7498434504476406181}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2fe260b4786adb4f8a0071f8b5c1691, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _openAnimation: {fileID: 7400000, guid: 6e87b5d1a8fb96b488c05f231e846978, type: 2}
-  _closeAnimation: {fileID: 7400000, guid: 850db300f0fa0cc40a36d4b0b040f902, type: 2}
-  _animation: {fileID: 786975631}
+  _isOpen: 1
 --- !u!111 &786975631
 Animation:
   m_ObjectHideFlags: 0
@@ -229,6 +216,32 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &4820365117251237279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7498434504476406181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 291e4e644cd04eb7b8e274c938925710, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &305654393578771898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7498434504476406181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af5fb0f3fc9e45cfbd1817591eefa518, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _openAnimationName: OpenFade
+  _closeAnimationName: CloseFade
 --- !u!1 &7498434506155886439
 GameObject:
   m_ObjectHideFlags: 0

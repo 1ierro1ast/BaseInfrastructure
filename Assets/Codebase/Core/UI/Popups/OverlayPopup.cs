@@ -3,7 +3,7 @@ using Codebase.Infrastructure.Services;
 
 namespace Codebase.Core.UI.Popups
 {
-    public class OverlayPopup : Popup
+    public class OverlayPopup : BasePopup
     {
         private IEventBus _eventBus;
         protected override void OnInitialization()

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Codebase.Core.UI.Popups
 {
-    public class WinPopup : Popup
+    public class WinPopup : BasePopup
     {
         [SerializeField] private Button _nextButton;
         
