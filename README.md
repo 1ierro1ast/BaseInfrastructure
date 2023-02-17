@@ -24,6 +24,7 @@ Just download last release [Here](https://github.com/1ierro1ast/BaseInfrastructu
 - [Base player controllers](https://github.com/1ierro1ast/BasePlayerControllers)
 - [Obstacles module](https://github.com/1ierro1ast/ObstaclesModule)
 - [Skin service](https://github.com/1ierro1ast/SkinServiceModule)
+- [Object pool](https://github.com/1ierro1ast/ObjectPoolService)
 
 <span style="color:green"> If you want to add your own module just send me pull request with updated README.md </span>
 

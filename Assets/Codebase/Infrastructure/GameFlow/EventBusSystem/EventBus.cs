@@ -5,7 +5,7 @@ namespace Codebase.Infrastructure.GameFlow.EventBusSystem
 {
     public class EventBus : IEventBus
     {
-        public Dictionary<Type, List<Action>> _subscribers;
+        private Dictionary<Type, List<Action>> _subscribers;
         private bool _firing;
         private List<int> _idsForRemove;
 
