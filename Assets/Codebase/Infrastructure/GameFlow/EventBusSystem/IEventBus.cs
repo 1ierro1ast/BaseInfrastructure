@@ -5,8 +5,11 @@ namespace Codebase.Infrastructure.GameFlow.EventBusSystem
 {
     public interface IEventBus : IService
     {
-        void Subscribe<T>(Action callback) where T : IEvent;
-        void Unsubscribe<T>(Action callback) where T : IEvent;
-        void Fire<T>() where T : IEvent;
+        public void Subscribe<T>(Action<T> handler) where T : IEvent;
+        public void Subscribe<T>(Action handler) where T : IEvent;
+        public void Unsubscribe<T>(Action<T> handler) where T : IEvent;
+        public void Unsubscribe<T>(Action handler) where T : IEvent;
+        public void Fire<T>() where T : IEvent;
+        public void Fire(IEvent eventToFire);
     }
 }
