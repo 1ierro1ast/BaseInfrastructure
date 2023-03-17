@@ -17,7 +17,7 @@ namespace Codebase.Infrastructure.GameFlow.EventBusSystem
 
             _subscribers[eventType].Add(handler);
         }
-
+        
         public void Subscribe<T>(Action handler) where T : IEvent
         {
             var eventType = typeof(T);
@@ -28,7 +28,7 @@ namespace Codebase.Infrastructure.GameFlow.EventBusSystem
 
             _subscribers[eventType].Add(handler);
         }
-
+        
         public void Unsubscribe<T>(Action<T> handler) where T : IEvent
         {
             var eventType = typeof(T);
@@ -36,7 +36,7 @@ namespace Codebase.Infrastructure.GameFlow.EventBusSystem
 
             _subscribers[eventType].Remove(handler);
         }
-
+        
         public void Unsubscribe<T>(Action handler) where T : IEvent
         {
             var eventType = typeof(T);
@@ -44,17 +44,12 @@ namespace Codebase.Infrastructure.GameFlow.EventBusSystem
 
             _subscribers[eventType].Remove(handler);
         }
-
+        
         public void Fire<T>() where T : IEvent
         {
-            IEvent instance = Activator.CreateInstance<T>();
-            
-            var eventType = instance.GetType();
-            
-            if (!_subscribers.ContainsKey(eventType)) return;
+            if (!_subscribers.TryGetValue(typeof(T), out var handlers)) return;
 
-            var handlers = _subscribers[eventType].ToArray();
-            foreach (var handler in handlers)
+            foreach (var handler in handlers.ToArray())
             {
                 handler.DynamicInvoke();
             }
@@ -62,12 +57,9 @@ namespace Codebase.Infrastructure.GameFlow.EventBusSystem
         
         public void Fire(IEvent eventToFire)
         {
-            var eventType = eventToFire.GetType();
-            
-            if (!_subscribers.ContainsKey(eventType)) return;
+            if (!_subscribers.TryGetValue(eventToFire.GetType(), out var handlers)) return;
 
-            var handlers = _subscribers[eventType].ToArray();
-            foreach (var handler in handlers)
+            foreach (var handler in handlers.ToArray())
             {
                 handler.DynamicInvoke(eventToFire);
             }
