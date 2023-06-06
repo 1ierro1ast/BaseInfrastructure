@@ -7,7 +7,13 @@ namespace Codebase.Infrastructure.StateMachine
     {
         protected Dictionary<Type, IExitableState> _states;
         protected IExitableState _activeState;
-        
+
+
+        protected void RegisterState<TState>(TState implementation) where TState : class, IExitableState
+        {
+            _states ??= new Dictionary<Type, IExitableState>();
+            _states[typeof(TState)] = implementation;
+        }
         public void Enter<TState>() where TState : class, IState
         {
             var state = ChangeState<TState>();

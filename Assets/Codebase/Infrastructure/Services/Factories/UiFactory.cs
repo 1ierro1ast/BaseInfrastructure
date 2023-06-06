@@ -41,8 +41,7 @@ namespace Codebase.Infrastructure.Services.Factories
         {
             if (_startPopup == null)
             {
-                _startPopup = _assetProvider.Instantiate<StartPopup>(AssetPath.StartPopupPath);
-                AddToMainCanvas(_startPopup);
+                _startPopup = InitializePopup<StartPopup>(AssetPath.StartPopupPath);
             }
             return _startPopup;
         }
@@ -51,8 +50,7 @@ namespace Codebase.Infrastructure.Services.Factories
         {
             if (_overlayPopup == null)
             {
-                _overlayPopup = _assetProvider.Instantiate<OverlayPopup>(AssetPath.OverlayPopupPath);
-                AddToMainCanvas(_overlayPopup);
+                _overlayPopup = InitializePopup<OverlayPopup>(AssetPath.OverlayPopupPath);
             }
             return _overlayPopup;
         }
@@ -61,8 +59,7 @@ namespace Codebase.Infrastructure.Services.Factories
         {
             if (_winPopup == null)
             {
-                _winPopup = _assetProvider.Instantiate<WinPopup>(AssetPath.WinPopupPath);
-                AddToMainCanvas(_winPopup);
+                _winPopup = InitializePopup<WinPopup>(AssetPath.WinPopupPath);
             }
             return _winPopup;
         }
@@ -71,10 +68,17 @@ namespace Codebase.Infrastructure.Services.Factories
         {
             if (_losePopup == null)
             {
-                _losePopup = _assetProvider.Instantiate<LosePopup>(AssetPath.LosePopupPath);
-                AddToMainCanvas(_losePopup);
+                _losePopup = InitializePopup<LosePopup>(AssetPath.LosePopupPath);
             }
             return _losePopup;
+        }
+
+        public TPopup InitializePopup<TPopup>(string path) where TPopup : BasePopup
+        {
+            var popup = _assetProvider.Instantiate<TPopup>(path);
+            AddToMainCanvas(popup);
+
+            return popup;
         }
 
         private void AddToMainCanvas(BasePopup basePopup)

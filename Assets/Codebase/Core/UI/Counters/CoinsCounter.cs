@@ -1,8 +1,8 @@
 using Codebase.Infrastructure.Services;
 using Codebase.Infrastructure.Services.DataStorage;
-using Codebase.Utils;
 using TMPro;
 using UnityEngine;
+using Codebase.Extensions;
 
 namespace Codebase.Core.UI.Counters
 {
@@ -17,13 +17,13 @@ namespace Codebase.Core.UI.Counters
             _gameVariables = AllServices.Container.Single<IGameVariables>();
             _gameVariables.ChangeCoinsCountEvent += GameVariablesOnChangeCoinsCountEvent;
 
-            _text.text = AbbrevationUtility.AbbreviateNumber(_gameVariables.CoinsCount);
+            _text.text = _gameVariables.CoinsCount.AbbreviateNumber();
         }
         
 
         private void GameVariablesOnChangeCoinsCountEvent(int amount)
         {
-            _text.text = AbbrevationUtility.AbbreviateNumber(amount);
+            _text.text = _gameVariables.CoinsCount.AbbreviateNumber();
         }
 
         private void OnDestroy()

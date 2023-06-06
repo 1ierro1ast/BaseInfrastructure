@@ -1,19 +1,12 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Codebase.Utils
+namespace Codebase.Extensions
 {
-    public static class AbbrevationUtility
+    public static class IntExtensions
     {
-        private static readonly SortedDictionary<int, string> Abbrevations = new SortedDictionary<int, string>
-        {
-            {1000,"k"},
-            {1000000, "m" },
-            {1000000000, "b" }
-        };
-
-        public static string AbbreviateNumber(float number)
+        public static string AbbreviateNumber(this int number)
         {
             for (int i = Abbrevations.Count - 1; i >= 0; i--)
             {
@@ -26,5 +19,12 @@ namespace Codebase.Utils
             }
             return number.ToString();
         }
+
+        private static readonly SortedDictionary<int, string> Abbrevations = new()
+        {
+            {1000,"k"},
+            {1000000, "m" },
+            {1000000000, "b" }
+        };
     }
 }

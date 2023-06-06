@@ -15,27 +15,19 @@ namespace Codebase.Infrastructure.GameFlow
         public GameStateMachine(SceneLoader sceneLoader, LoadingCurtain loadingCurtain, AllServices services,
             ICoroutineRunner coroutineRunner)
         {
-            _states = new Dictionary<Type, IExitableState>()
-            {
-                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services, coroutineRunner),
-
-                [typeof(GameReadyState)] = new GameReadyState(this, services.Single<IUiFactory>(),
-                    services.Single<ITemporaryLevelVariables>(), services.Single<IEventBus>(),
-                    loadingCurtain, coroutineRunner),
-
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingCurtain,
-                    services.Single<ILevelFactory>(), services.Single<IGameVariables>()),
-
-                [typeof(GameplayState)] = new GameplayState(this, services.Single<IEventBus>(),
-                    services.Single<IUiFactory>(), services.Single<ITemporaryLevelVariables>(), coroutineRunner,
-                    loadingCurtain),
-
-                [typeof(WinState)] = new WinState(this, services.Single<IUiFactory>(),
-                    services.Single<IGameVariables>(), loadingCurtain, coroutineRunner),
-
-                [typeof(LoseState)] = new LoseState(this, services.Single<IUiFactory>(), loadingCurtain, 
-                    coroutineRunner)
-            };
+            RegisterState<BootstrapState>(new BootstrapState(this, sceneLoader, services, coroutineRunner));
+            RegisterState<GameReadyState>(new GameReadyState(this, services.Single<IUiFactory>(),
+                services.Single<ITemporaryLevelVariables>(), services.Single<IEventBus>(), loadingCurtain,
+                coroutineRunner));
+            RegisterState<LoadLevelState>(new LoadLevelState(this, sceneLoader, loadingCurtain,
+                services.Single<ILevelFactory>(), services.Single<IGameVariables>()));
+            RegisterState<GameplayState>(new GameplayState(this, services.Single<IEventBus>(),
+                services.Single<IUiFactory>(), services.Single<ITemporaryLevelVariables>(), coroutineRunner,
+                loadingCurtain));
+            RegisterState<WinState>(new WinState(this, services.Single<IUiFactory>(),
+                services.Single<IGameVariables>(), loadingCurtain, coroutineRunner));
+            RegisterState<LoseState>(new LoseState(this, services.Single<IUiFactory>(), loadingCurtain,
+                coroutineRunner));
         }
     }
 }

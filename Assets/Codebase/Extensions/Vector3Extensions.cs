@@ -23,5 +23,15 @@ namespace Codebase.Extensions
         {
             return new Vector2(vector3.x, vector3.z);
         }
+        
+        public static Vector3 GetRandomPointAtSphere(this Vector3 vector3, float radius, Vector3 center = default)
+        {
+            if (center == default) center = vector3;
+            vector3.x = Random.value - 0.5f;
+            vector3.y = Random.value - 0.5f;
+            vector3.z = Random.value - 0.5f;
+            vector3 = vector3.normalized * radius;
+            return vector3 + center;
+        }
     }
 }
