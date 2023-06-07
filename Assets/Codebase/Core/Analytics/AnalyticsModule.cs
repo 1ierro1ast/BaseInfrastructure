@@ -1,9 +1,9 @@
 ﻿using System;
-using Codebase.Infrastructure.GameFlow;
 using Codebase.Infrastructure.GameFlow.EventBusSystem;
 using Codebase.Infrastructure.GameFlow.Events;
 using Codebase.Infrastructure.Services.DataStorage;
 using UnityEngine;
+using Zenject;
 
 namespace Codebase.Core.Analytics
 {
@@ -15,6 +15,7 @@ namespace Codebase.Core.Analytics
         private DateTime _finishTime;
         private const string ModuleTag = "[AnalyticsModule]: ";
 
+        [Inject]
         public AnalyticsModule(IGameVariables gameVariables, IEventBus eventBus)
         {
             _gameVariables = gameVariables;

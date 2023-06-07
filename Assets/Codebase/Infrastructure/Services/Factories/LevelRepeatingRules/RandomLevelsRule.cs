@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Codebase.Core.Level;
 using Codebase.Extensions;
-using UnityEngine;
 
 namespace Codebase.Infrastructure.Services.Factories.LevelRepeatingRules
 {

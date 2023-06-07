@@ -1,9 +1,9 @@
 using System;
 using Codebase.Infrastructure.GameFlow.EventBusSystem;
 using Codebase.Infrastructure.GameFlow.Events;
-using Codebase.Infrastructure.Services;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Codebase.Core.UI.Popups
 {
@@ -13,14 +13,19 @@ namespace Codebase.Core.UI.Popups
         [SerializeField] private Button _startButton;
         private IEventBus _eventBus;
 
+        [Inject]
+        private void Construct(IEventBus eventBus)
+        {
+            Debug.Log($"ctor {nameof(StartPopup)}.{nameof(Construct)}");
+            _eventBus = eventBus;
+            _eventBus.Subscribe<GameplayStarted>(OnGameplayStarted);
+        }
+
         protected override void OnInitialization()
         {
             base.OnInitialization();
             OpenPopup();
             _startButton.onClick.AddListener(OnStartButtonClick);
-            _eventBus = AllServices.Container.Single<IEventBus>();
-            
-            _eventBus.Subscribe<GameplayStarted>(OnGameplayStarted);
         }
 
         private void OnDestroy()

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Zenject;
 
 namespace Codebase.Core.Ads
 {
@@ -9,8 +10,8 @@ namespace Codebase.Core.Ads
         public bool RewardedAdsIsReady => true;
         public bool InterstitialAdsIsReady => true;
         public bool NetworkIsEnable => Application.internetReachability == NetworkReachability.NotReachable;
-
-
+        
+        [Inject]
         public AdsModule()
         {
             Initialize();

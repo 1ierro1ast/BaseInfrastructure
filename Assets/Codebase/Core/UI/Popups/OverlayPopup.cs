@@ -1,17 +1,19 @@
 using Codebase.Infrastructure.GameFlow.EventBusSystem;
 using Codebase.Infrastructure.GameFlow.Events;
-using Codebase.Infrastructure.Services;
+using UnityEngine;
+using Zenject;
 
 namespace Codebase.Core.UI.Popups
 {
     public class OverlayPopup : BasePopup
     {
         private IEventBus _eventBus;
-        protected override void OnInitialization()
+        [Inject]
+        private void Construct(IEventBus eventBus)
         {
-            base.OnInitialization();
+            Debug.Log($"ctor {nameof(OverlayPopup)}.{nameof(Construct)}");
 
-            _eventBus = AllServices.Container.Single<IEventBus>();
+            _eventBus = eventBus;
             
             _eventBus.Subscribe<LevelFinished>(OnLevelFinished);
         }

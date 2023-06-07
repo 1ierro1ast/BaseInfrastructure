@@ -2,6 +2,7 @@
 using Codebase.Infrastructure.Services.AssetManagement;
 using Codebase.Infrastructure.Services.DataStorage;
 using UnityEngine;
+using Zenject;
 
 namespace Codebase.Infrastructure.Services.Factories
 {
@@ -10,6 +11,7 @@ namespace Codebase.Infrastructure.Services.Factories
         private readonly IAssetProvider _assetProvider;
         private readonly LevelsList _levelsList;
 
+        [Inject]
         public LevelFactory(IAssetProvider assetProvider, IGameVariables gameVariables,
             ITemporaryLevelVariables temporaryLevelVariables)
         {

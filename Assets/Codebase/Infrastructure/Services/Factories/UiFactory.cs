@@ -2,12 +2,13 @@
 using Codebase.Core.UI.Popups;
 using Codebase.Infrastructure.Services.AssetManagement;
 using UnityEngine;
+using Zenject;
 
 namespace Codebase.Infrastructure.Services.Factories
 {
     public class UiFactory : IUiFactory
     {
-        private IAssetProvider _assetProvider;
+        private readonly IAssetProvider _assetProvider;
 
         private StartPopup _startPopup;
         private OverlayPopup _overlayPopup;
@@ -15,6 +16,7 @@ namespace Codebase.Infrastructure.Services.Factories
         private LosePopup _losePopup;
         private Canvas _mainCanvas;
 
+        [Inject]
         public UiFactory(IAssetProvider assetProvider)
         {
             _assetProvider = assetProvider;
@@ -76,6 +78,7 @@ namespace Codebase.Infrastructure.Services.Factories
         public TPopup InitializePopup<TPopup>(string path) where TPopup : BasePopup
         {
             var popup = _assetProvider.Instantiate<TPopup>(path);
+            
             AddToMainCanvas(popup);
 
             return popup;

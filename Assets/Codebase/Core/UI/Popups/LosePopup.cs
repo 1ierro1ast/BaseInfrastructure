@@ -1,6 +1,4 @@
 using System;
-using Codebase.Core.Ads;
-using Codebase.Infrastructure.Services;
 using UnityEngine;
 using UnityEngine.UI;
 

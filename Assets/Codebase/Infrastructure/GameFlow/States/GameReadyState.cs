@@ -19,7 +19,7 @@ namespace Codebase.Infrastructure.GameFlow.States
         private readonly LoadingCurtain _loadingCurtain;
         private readonly ICoroutineRunner _coroutineRunner;
         private StartPopup _startPopup;
-
+        
         public GameReadyState(GameStateMachine gameStateMachine, IUiFactory uiFactory,
             ITemporaryLevelVariables temporaryLevelVariables, IEventBus eventBus,
             LoadingCurtain loadingCurtain, ICoroutineRunner coroutineRunner)

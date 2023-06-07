@@ -1,5 +1,6 @@
 ﻿using System;
 using Codebase.Infrastructure.Services.SaveLoad;
+using Zenject;
 
 namespace Codebase.Infrastructure.Services.DataStorage
 {
@@ -50,6 +51,7 @@ namespace Codebase.Infrastructure.Services.DataStorage
             }
         }
 
+        [Inject]
         public GameVariables(ISaveLoadService saveLoadService)
         {
             _saveLoadService = saveLoadService;

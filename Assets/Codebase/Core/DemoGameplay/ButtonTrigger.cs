@@ -1,9 +1,8 @@
-﻿using Codebase.Infrastructure.GameFlow;
-using Codebase.Infrastructure.GameFlow.EventBusSystem;
+﻿using Codebase.Infrastructure.GameFlow.EventBusSystem;
 using Codebase.Infrastructure.GameFlow.Events;
-using Codebase.Infrastructure.Services;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Codebase.Core.DemoGameplay
 {
@@ -13,10 +12,15 @@ namespace Codebase.Core.DemoGameplay
         private Button _button;
         private IEventBus _eventBus;
 
+        [Inject]
+        private void Construct(IEventBus eventBus)
+        {
+            _eventBus = eventBus;
+        }
+
         private void Awake()
         {
             _button = GetComponent<Button>();
-            _eventBus = AllServices.Container.Single<IEventBus>();
             _button?.onClick.AddListener(OnButtonClick);
         }
 
@@ -40,5 +44,5 @@ namespace Codebase.Core.DemoGameplay
     {
         Win,
         Lose
-    } 
+    }
 }

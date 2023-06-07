@@ -1,8 +1,8 @@
-using Codebase.Infrastructure.Services;
 using Codebase.Infrastructure.Services.DataStorage;
 using TMPro;
 using UnityEngine;
 using Codebase.Extensions;
+using Zenject;
 
 namespace Codebase.Core.UI.Counters
 {
@@ -12,9 +12,13 @@ namespace Codebase.Core.UI.Counters
 
         private IGameVariables _gameVariables;
 
+        [Inject]
+        private void Construct(IGameVariables gameVariables)
+        {
+            _gameVariables = gameVariables;
+        }
         private void Awake()
         {
-            _gameVariables = AllServices.Container.Single<IGameVariables>();
             _gameVariables.ChangeCoinsCountEvent += GameVariablesOnChangeCoinsCountEvent;
 
             _text.text = _gameVariables.CoinsCount.AbbreviateNumber();
