@@ -33,5 +33,10 @@ namespace Codebase.Extensions
             vector3 = vector3.normalized * radius;
             return vector3 + center;
         }
+
+        public static Vector3 GetMiddlePoint(this Vector3 startPoint, Vector3 finishPoint)
+        {
+            return (finishPoint - startPoint) / 2f;
+        }
     }
 }

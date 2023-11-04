@@ -47,5 +47,10 @@ namespace Codebase.Extensions
         {
             return GetRandomPointAtCircle(vector2, radius, new Vector2(center.x, center.z));
         }
+        
+        public static Vector2 GetMiddlePoint(this Vector2 startPoint, Vector2 finishPoint)
+        {
+            return (finishPoint - startPoint) / 2f;
+        }
     }
 }
